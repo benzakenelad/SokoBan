@@ -2,8 +2,8 @@ package commands;
 
 import java.io.IOException;
 
-import levels.Level;
-import levels.LoadLevel;
+import model.data.Level;
+import model.data.LoadLevel;
 
 public class LoadLevelCommand implements Command {
 	private Level lvl = null;

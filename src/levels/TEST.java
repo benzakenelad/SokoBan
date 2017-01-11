@@ -2,6 +2,12 @@ package levels;
 
 import java.util.Scanner;
 
+import model.data.Direction;
+import model.data.Level;
+import model.data.LoadLevel;
+import model.data.Move1Step;
+import model.policy.MySokobanPolicy;
+
 public class TEST {
 
 	

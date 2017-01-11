@@ -1,9 +1,9 @@
 	package commands;
 
-import levels.Direction;
-import levels.Level;
-import levels.Move1Step;
-import levels.MySokobanPolicy;
+import model.data.Direction;
+import model.data.Level;
+import model.data.Move1Step;
+import model.policy.MySokobanPolicy;
 
 public class MoveCommand implements Command {
 

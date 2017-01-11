@@ -1,6 +1,7 @@
-package levels;
+package model.data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Level implements Serializable{
 
@@ -144,4 +145,25 @@ public class Level implements Serializable{
 		}
 		return true;
 	}
+	public ArrayList<String> getLevelByArrayListOfStrings() // returns an ArrayList<String> object of the level data by the convention (box = @, wall = #, character = A, target = o)
+	{
+		ArrayList<String> levelDataTXT = new ArrayList<String>();	
+		String s = new String("");
+		
+		for(int i = 0; i < levelHeight; i++)
+		{
+			int length = levelData[i].length;
+			for(int j = 0; j < length; j++)
+			{
+				if(levelData[i][j] != null)
+					s += levelData[i][j].toString();
+				else
+					s += " ";
+			}
+			levelDataTXT.add(new String(s));
+			s = "";
+		}
+		return levelDataTXT;
+	}
+	
 }

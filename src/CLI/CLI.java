@@ -7,8 +7,8 @@ import commands.ExitCommand;
 import commands.LoadLevelCommand;
 import commands.MoveCommand;
 import commands.SaveLevelCommand;
-import levels.Level;
 import levels.TextLevelDisplay;
+import model.data.Level;
 
 public class CLI {
 

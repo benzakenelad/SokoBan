@@ -1,6 +1,6 @@
 package commands;
 
-import levels.Level;
+import model.data.Level;
 
 public interface Command {
 

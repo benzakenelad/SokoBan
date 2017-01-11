@@ -1,4 +1,6 @@
-package levels;
+package model.data;
+
+import model.policy.Policy;
 
 public class Move1Step implements Move{
 	

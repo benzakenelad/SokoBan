@@ -1,7 +1,7 @@
 package commands;
 
-import levels.Level;
 import levels.TextLevelDisplay;
+import model.data.Level;
 
 public class DisplayCommand implements Command {
 

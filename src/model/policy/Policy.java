@@ -1,4 +1,8 @@
-package levels;
+package model.policy;
+
+import model.data.Direction;
+import model.data.Level;
+import model.data.Position;
 
 public abstract class Policy {
 	public abstract void check(Level lvl, Direction dir) throws Exception;

@@ -2,9 +2,8 @@ package controller;
 
 import java.util.Observable;
 
-import javax.swing.text.View;
-
 import model.Model;
+import view.View;
 
 
 public class MyController implements Controller {

@@ -1,4 +1,4 @@
-package levels;
+package model.data;
 
 public class CreateGameObject {
 	public GameObject GenerateGerneralObject(char c) // Generate a new game object from char

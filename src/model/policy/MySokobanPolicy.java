@@ -1,4 +1,11 @@
-package levels;
+package model.policy;
+
+import model.data.Character;
+import model.data.Direction;
+import model.data.GameObject;
+import model.data.Level;
+import model.data.Position;
+import model.data.Target;
 
 public class MySokobanPolicy extends Policy {
 

@@ -1,4 +1,4 @@
-package levels;
+package model.data;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -11,7 +11,7 @@ public class MyTextLevelSaver implements LevelSaver {
 	public void saveLevel(String fileName, Level lvl) throws IOException {
 		if(lvl == null)
 			return;
-		ArrayList<String> levelDataTXT = new LevelToArrayListOfStrings().cast(lvl);
+		ArrayList<String> levelDataTXT = lvl.getLevelByArrayListOfStrings();
 		int size = levelDataTXT.size();
 		
 		BufferedWriter bw = null;

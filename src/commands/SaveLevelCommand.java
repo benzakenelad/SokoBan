@@ -2,8 +2,8 @@ package commands;
 
 import java.io.IOException;
 
-import levels.Level;
-import levels.SaveLevel;
+import model.data.Level;
+import model.data.SaveLevel;
 
 public class SaveLevelCommand implements Command{
 

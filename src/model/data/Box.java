@@ -1,9 +1,8 @@
-package levels;
+package model.data;
 
 import java.io.Serializable;
 
-public class Wall extends GameObject implements Serializable{
-
+public class Box extends GameObject implements Serializable{
 	
 	/**
 	 * 
@@ -12,10 +11,11 @@ public class Wall extends GameObject implements Serializable{
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "#";
-	}	
+		return "@";
+	}
+	@Override
 	public String toString2() {
 		// TODO Auto-generated method stub
-		return "#";
-	}	
+		return "@";
+	}
 }

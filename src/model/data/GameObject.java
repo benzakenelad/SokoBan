@@ -9,15 +9,14 @@ public class GameObject implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	// data members
-	private Position pos = new Position();
+	private Position pos = null;
 
 	// c'tors
 	public GameObject(Position pos) {
-		this.pos = pos;
+		this.pos = new Position(pos);
 	}
 	public GameObject() {
-		pos.setX(0);
-		pos.setY(0);
+		pos = new Position(0,0);
 	}
 	
 	// getters and setters
@@ -34,9 +33,9 @@ public class GameObject implements Serializable{
 		// TODO Auto-generated method stub
 		return "GameObject";
 	}
-	public String toString2()
+	public String toStringXRay() // see the actual object (if there is box on target toStringXRay will return "o")
 	{
-		return "GameObject";
+		return this.toString();
 	}
 	
 		

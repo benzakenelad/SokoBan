@@ -10,38 +10,42 @@ public class Position implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int x;
-	private int y;
+	
+	// Position data members
+	
+	private int x = 0;
+	private int y = 0;
 
-	
-	public Position(int x, int y) throws Exception{
-		if(x >= 0 && y >= 0)
-		{
-		   this.x = x;
-		   this.y = y;
-		}
-		else
-			throw new Exception("Invalid Poistion Parameters");
+	// c'tors
+	public Position(int x, int y) // c'tor
+	{
+		this.setX(x);
+		this.setY(y);
 	}
 	
-	public Position(Position p)
+	public Position(Position p) // copy c'tor
 	{
-		this.x = p.getX();
-		this.y = p.getY();
-		
-	}
-	
-	public Position()
-	{
-		this.x = -1;
-		this.y = -1;
+		this.setX(p.getX());
+		this.setY(p.getY());		
 	}
 
+	public Position()  // default c'tor
+	{
+	}
+
+	// getters and setters
 	public int getX() {
 		return x;
 	}
-
+	
 	public void setX(int x) {
+		if(x < 0)
+			try {
+				throw new Exception("Invalid Position Parameters");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		this.x = x;
 	}
 
@@ -50,7 +54,22 @@ public class Position implements Serializable{
 	}
 
 	public void setY(int y) {
+		if (y < 0)
+			try {
+				throw new Exception("Invalid Position Parameters");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		this.y = y;
 	}
 	
+	// methods
+	@Override
+	public String toString() 
+	{
+		String s = new String();
+		s = "(" + this.x +"," + this.y + ")";
+		return s;
+	}
 }

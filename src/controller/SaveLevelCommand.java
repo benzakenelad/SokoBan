@@ -1,19 +1,20 @@
-package commands;
+package controller;
 
 import java.io.IOException;
 
-import model.data.Level;
 import model.data.SaveLevel;
 
-public class SaveLevelCommand implements Command{
-
+public class SaveLevelCommand extends Command{
+	
+	
+	
 	@Override
-	public void execute(Level lvl, String note) {
+	public void execute() {
 		if(lvl == null)
 			return;
 		
 		try {
-			new SaveLevel().Action(lvl, note);
+			new SaveLevel().Action(lvl, order);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

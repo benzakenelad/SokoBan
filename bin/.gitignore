@@ -1,4 +1,6 @@
-/controller/
+/CLI/
+/boot/
+/commands/
+/levels/
 /model/
-/view/
-/sfsdfs/
+/controller/

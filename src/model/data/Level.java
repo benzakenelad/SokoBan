@@ -22,6 +22,7 @@ public class Level implements Serializable{
 	private int wallCount = 0; // wall counter
 	private int emptyCellCount = 0; // empty cells counter
 	private int score = 0; // score
+	private int numOfBoxesOnTargets = 0; // number of boxes on targets
 	
 	
 	// c'tors
@@ -98,6 +99,13 @@ public class Level implements Serializable{
 	public void setCC(Character cC) {
 		CC = cC;
 	}
+	public int getNumOfBoxesOnTargets() {
+		return numOfBoxesOnTargets;
+	}
+	public void setNumOfBoxesOnTargets(int numOfBoxesOnTargets) {
+		this.numOfBoxesOnTargets = numOfBoxesOnTargets;
+	}
+	
 	
 	public GameObject getGameObjectByPosition(Position p) throws Exception // return an object by his position
 	{
@@ -134,7 +142,7 @@ public class Level implements Serializable{
 			{
 				if(levelData[i][j] != null)
 				{
-					if(levelData[i][j].toString2() == "o")
+					if(levelData[i][j].toStringXRay() == "o")
 					{
 						Target t = (Target) levelData[i][j];
 						if(t.isFinishMoveFlag() == false)

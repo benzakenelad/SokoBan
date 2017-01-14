@@ -26,13 +26,15 @@ public class Target extends GameObject implements Serializable{
 		
 		if(onMe != null)
 		{
-			if(onMe.toString2() == "@")
+			setFlag(true);
+			if(onMe.toStringXRay() == "@")
 				setFinishMoveFlag(true);
 			else
 				setFinishMoveFlag(false);
 		}else
 		{
 			setFinishMoveFlag(false);
+			setFlag(false);
 		}
 	}
 	
@@ -60,8 +62,8 @@ public class Target extends GameObject implements Serializable{
 		else
 			return "o";
 	}
-	
-	public String toString2()
+	@Override
+	public String toStringXRay() // see the actual object (if there is box on target toStringXRay will return "o")
 	{
 		return "o";
 	}

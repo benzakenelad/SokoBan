@@ -9,197 +9,115 @@ import model.data.Target;
 
 public class MySokobanPolicy extends Policy {
 
-	public void check(Level lvl, /*Position source, Position dest, */ Direction dir) throws Exception { 
-		Position source = null, dest = null;
-		source = new Position(lvl.getCC().getPos());
-		dest = PositionCalculator(source, dir);
-		
-		if(lvl.getGameObjectByPosition(dest) != null)
-			if(lvl.getGameObjectByPosition(dest).toString2() == "#") // if there is a wall ahead
-				return;
-		
+	public void check(Level lvl, Direction dir) throws Exception 
+	{ 
 		Character player = lvl.getCC();
-		GameObject nearObject = lvl.getGameObjectByPosition(dest);
-		Position nextStepPos = null;
-		nextStepPos = PositionCalculator(dest, dir);
-		GameObject nextStepObj = lvl.getGameObjectByPosition(nextStepPos);
+		Position source = new Position(player.getPos());
+		boolean playerWasOnTarget = player.isOnTarget();
 		
-		if (player.isOnTarget() == false) // the player not on target
-		{
-			if(nearObject == null) // if there is nothing ahead the player move
+		if(moveThePlayerIfHeCan(lvl, dir) == true) // the player moved (here we clear the slot that the player was on)
+			if(playerWasOnTarget == true) // in case the player was on target
 			{
-				lvl.moveObjectToPosition(player, dest);
+				Target t = (Target)lvl.getGameObjectByPosition(source);
+				t.setOnMe(null);
+			}
+			else // in case the player was not on target
 				lvl.makeSlotNullByPosition(source);
-				return;
-				
-			} else if(nearObject.toString2() == "#") // case there is a wall ahead, the player can't move
+		
+		if(lvl.getGameObjectByPosition(player.getPos()).toStringXRay() == "o") // if the player went on target
+			player.setOnTarget(true);
+		else
+			player.setOnTarget(false);
+		
+	}
+	
+	private boolean moveThePlayerIfHeCan(Level lvl, Direction dir) throws Exception
+	{
+		Character player = lvl.getCC();
+		Position sourcePos = null, destPos = null, afterDestPos = null;
+		sourcePos = new Position(player.getPos());
+		destPos = PositionCalculator(sourcePos, dir);
+			
+		GameObject destObj = lvl.getGameObjectByPosition(destPos);
+		
+		if(destObj != null)
+			if(destObj.toString() == "#") // case we have wall in front of us
+				return false;
+		
+		afterDestPos = PositionCalculator(destPos, dir);
+		GameObject afterDestObj = lvl.getGameObjectByPosition(afterDestPos);
+			
+		if(destObj != null)
+			if(destObj.toString() == "@") // case we have one box in front of us
+				if(afterDestObj != null)
+					if(afterDestObj.toString() == "@" || afterDestObj.toString() == "#") // in case we have 2 boxes in front of us, or box and wall in front of us
+						return false;	
+			
+		
+		// in case he can move //
+		
+		if(destObj == null) // if there is nothing ahead the player move
+		{
+			lvl.moveObjectToPosition(player, destPos);
+			return true;
+			
+		}else if(destObj.toStringXRay() == "o") // case there is a target ahead 
+		{
+			Target t = (Target)destObj;
+			if(t.isFlag() == false) // the target is empty so the player go on it
 			{
-				return;
-				
-			}else if(nearObject.toString2() == "o") // case there is a target ahead : 
+				makePlayerOnTarget(player, t);
+				return true;
+			}
+			else // there is a box on the target
 			{
-				Target t = (Target)nearObject;
-				if(t.isFlag() == false) // the target is empty
+				if(afterDestObj == null) // the box is on target and can move 
 				{
+					GameObject go = t.getOnMe();
+					lvl.moveObjectToPosition(go, afterDestPos);
+					t.setOnMe(null);
 					makePlayerOnTarget(player, t);
-					lvl.makeSlotNullByPosition(source);
-					return;
-				}
-				else // there is a box on the target
-				{
-					if(nextStepObj == null) // the box can move
-					{
-						GameObject go = t.getOnMe();
-						lvl.moveObjectToPosition(go, nextStepPos);
-						t.setFlag(false);
-						t.setOnMe(null);
-						makePlayerOnTarget(player, t);
-						lvl.makeSlotNullByPosition(source);
-						return;
-						
-					}else if(nextStepObj.toString() == "#" || nextStepObj.toString() == "@")// the box can't move
-					{
-						return;
-					}
-					else if(nextStepObj.toString2() == "o") // if we are here the nextStepObj is an empty target
-					{
-						Target t2 = (Target) nextStepObj;
-						GameObject movingObj = t.getOnMe();
-						movingObj.setPos(new Position(t2.getPos()));
-						t2.setOnMe(movingObj);
-						t2.setFlag(true);
-						t.setFlag(false);
-						t.setOnMe(null);
-						makePlayerOnTarget(player, t);
-						lvl.makeSlotNullByPosition(source);
-						return;
-					}
-				}
-			}else if(nearObject.toString2() == "@") // case there is a box ahead
-			{
-				if (nextStepObj == null) // after a box there is an empty slot
-				{
-					lvl.moveObjectToPosition(nearObject, nextStepPos);
-					lvl.makeSlotNullByPosition(dest);
-					lvl.moveObjectToPosition(player, dest);
-					lvl.makeSlotNullByPosition(source);
-					return;
+					return true;
 					
-				}else if(nextStepObj.toString() == "#" || nextStepObj.toString() == "@")// the box can't move
+				}else if(afterDestObj.toStringXRay() == "o") // if we are here the nextStepObj is an empty target
 				{
-					return;
-					
-				}else if(nextStepObj.toString2() == "o") // if we are here the nextStepObj is an empty target
-				{
-					Target t = (Target) nextStepObj;
-					t.setFlag(true);
-					t.setOnMe(nearObject);
-					nearObject.setPos(new Position(t.getPos()));
-					lvl.makeSlotNullByPosition(dest);
-					lvl.moveObjectToPosition(player, dest);
-					lvl.makeSlotNullByPosition(source);
-					return;
+					Target t2 = (Target)afterDestObj;
+					GameObject go = t.getOnMe();
+					go.setPos(new Position(t2.getPos()));
+					t2.setOnMe(go);
+					t.setOnMe(null);
+					makePlayerOnTarget(player, t);
+					return true;
 				}
 			}
-		}else // player is on target
+		}else if(destObj.toStringXRay() == "@") // case there is a box ahead
 		{
-			Target t = (Target) lvl.getGameObjectByPosition(source);
-			if(nearObject == null) // there is nothing ahead
+			if (afterDestObj == null) // after a box there is an empty slot
 			{
-				lvl.moveObjectToPosition(player, dest);
-				player.setOnTarget(false);
-				t.setFlag(false);
-				t.setOnMe(null);
-				return;
+				lvl.moveObjectToPosition(destObj, afterDestPos);
+				lvl.makeSlotNullByPosition(destPos);
+				lvl.moveObjectToPosition(player, destPos);
+				return true;
 				
-			}else if(nearObject.toString() == "#") // case there is a wall ahead, the player can't move
+			}else if(afterDestObj.toStringXRay() == "o") // if we are here the afterDestObj is an empty target
 			{
-				return;
-				
-			}else if(nearObject.toString2() == "o") // in case there is a target ahead
-			{
-				Target t2 = (Target) nearObject;
-				if(t2.isFlag() == false) // in case the target is empty
-				{
-					makePlayerOnTarget(player, t2);
-					t.setFlag(false);
-					t.setOnMe(null);
-					return;
-					
-				}else // in case there is a box on the target
-				{
-					GameObject movingObj = t2.getOnMe();
-					if(nextStepObj == null) // case the nextStepObj is an empty slot
-					{
-						lvl.moveObjectToPosition(movingObj, nextStepPos);
-						t2.setOnMe(null);
-						t2.setFlag(false);
-						makePlayerOnTarget(player, t2);
-						t.setFlag(false);
-						t.setOnMe(null);
-						return; 
-						
-					}else if(nextStepObj.toString() == "@" || nextStepObj.toString() == "#") // the box can't move
-					{
-						return;
-						
-					}else if(nextStepObj.toString2() == "o") // we know that the next step object is an empty target
-					{
-						Target t3 = (Target) nextStepObj;
-						t3.setOnMe(movingObj);
-						movingObj.setPos(new Position(t3.getPos()));
-						t3.setFlag(true);
-						t2.setOnMe(null);
-						t2.setFlag(false);
-						makePlayerOnTarget(player, t2);
-						t.setOnMe(null);
-						t.setFlag(false);
-						return;
-						
-					}
-				}
-			}else if(nearObject.toString2() == "@") // in case there is a box ahead
-			{
-				if(nextStepObj == null)
-				{
-					lvl.moveObjectToPosition(nearObject, nextStepPos);
-					lvl.makeSlotNullByPosition(dest);
-					lvl.moveObjectToPosition(player, dest);
-					player.setOnTarget(false);
-					t.setOnMe(null);
-					t.setFlag(false);
-					return;
-					
-				}
-				if(nextStepObj.toString() == "@" || nextStepObj.toString() == "#") // the box can't move
-				{
-					return;
-					
-				}else if(nextStepObj.toString2() == "o") // in case there is an empty target after the box
-				{
-					Target t3 = (Target) nextStepObj;
-					nearObject.setPos(new Position(t3.getPos()));
-					t3.setOnMe(nearObject);
-					t3.setFlag(true);
-					lvl.makeSlotNullByPosition(dest);
-					lvl.moveObjectToPosition(player, dest);
-					player.setOnTarget(false);
-					t.setFlag(false);
-					t.setOnMe(null);
-					return;
-					
-				}
+				Target t2 = (Target)afterDestObj;
+				t2.setOnMe(destObj);
+				destObj.setPos(new Position(t2.getPos()));
+				lvl.makeSlotNullByPosition(destPos);
+				lvl.moveObjectToPosition(player, destPos);
+				return true;
 			}
 		}
+		
+		throw new Exception("unrecognized move (in MySokobanPolicy)");
 	}
 	
 	private void makePlayerOnTarget(Character player, Target t) throws Exception // move the player on the target
 	{
 		if(t.isFlag() == false)
 		{  
-			t.setFlag(true);
 			t.setOnMe(player);
-			player.setOnTarget(true);
 		    player.setPos(new Position(t.getPos()));
 		}
 	}

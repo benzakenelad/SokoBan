@@ -13,9 +13,5 @@ public class Box extends GameObject implements Serializable{
 		// TODO Auto-generated method stub
 		return "@";
 	}
-	@Override
-	public String toString2() {
-		// TODO Auto-generated method stub
-		return "@";
-	}
+	
 }

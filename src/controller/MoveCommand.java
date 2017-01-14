@@ -1,18 +1,18 @@
-	package commands;
+	package controller;
 
 import model.data.Direction;
-import model.data.Level;
 import model.data.Move1Step;
 import model.policy.MySokobanPolicy;
 
-public class MoveCommand implements Command {
-
-	public void execute(Level lvl, String note) {
+public class MoveCommand extends Command {
+	
+	
+	public void execute() {
 		if(lvl == null)
 			return;
 		Direction dir = null;
-		if(note.compareTo("left") == 0 || note.compareTo("up") == 0 || note.compareTo("right") == 0 || note.compareTo("down") == 0)
- 			dir = Direction.valueOf(note);		
+		if(order.compareTo("left") == 0 || order.compareTo("up") == 0 || order.compareTo("right") == 0 || order.compareTo("down") == 0)
+ 			dir = Direction.valueOf(order);		
 		else
 			return;
 		

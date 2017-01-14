@@ -20,15 +20,5 @@ public class MyModel extends Observable implements Model  {
 		this.lvl = lvl;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

@@ -16,14 +16,11 @@ public class Character extends GameObject implements Serializable{
 		// TODO Auto-generated method stub
 		return "A";
 	}
-	@Override
-	public String toString2() {
-		// TODO Auto-generated method stub
-		return "A";
-	}
+	
 	public boolean isOnTarget() {
 		return onTarget;
 	}
+	
 	public void setOnTarget(boolean onTarget) {
 		this.onTarget = onTarget;
 	}

@@ -14,8 +14,4 @@ public class Wall extends GameObject implements Serializable{
 		// TODO Auto-generated method stub
 		return "#";
 	}	
-	public String toString2() {
-		// TODO Auto-generated method stub
-		return "#";
-	}	
 }

@@ -1,6 +1,6 @@
 package controller;
 
-public class ShowMenuCommand extends Command {
+public class ShowMenuCommand extends SokoCommand {
 
 	@Override
 	public void execute() {

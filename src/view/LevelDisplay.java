@@ -1,4 +1,4 @@
-package levels;
+package view;
 
 import model.data.Level;
 

@@ -1,6 +1,5 @@
 package boot;
 
-import CLI.CLI;
 import controller.MyController;
 import model.MyModel;
 import view.MyView;
@@ -14,13 +13,8 @@ public class Run {
 		MyController controller = new MyController(model, view);
 		view.addObserver(controller);
 		model.addObserver(controller);
-		
-		
-		
-		
-		
-		CLI game = new CLI();
-		game.StartSokoban();
+		controller.start();
+		controller.CLI();
 		
 	}
 

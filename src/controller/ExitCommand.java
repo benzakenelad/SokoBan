@@ -1,6 +1,6 @@
 	package controller;
 
-public class ExitCommand extends Command {
+public class ExitCommand extends SokoCommand {
 	
 	
 	

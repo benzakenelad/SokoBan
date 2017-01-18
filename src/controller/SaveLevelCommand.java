@@ -1,12 +1,12 @@
 package controller;
 
-public class SaveLevelCommand extends SokoCommand{
+public class SaveLevelCommand extends SokobanCommand{
 	
 	
 	
 	@Override
 	public void execute() {
-		model.SaveLevel(order);	
+		controller.getModel().SaveLevel(order);
 	}
 
 }

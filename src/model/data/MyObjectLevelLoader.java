@@ -1,13 +1,12 @@
 package model.data;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 
 public class MyObjectLevelLoader implements LevelLoader {
 
 	@Override
-	public Level loadLevel(InputStream in) throws IOException {
+	public Level loadLevel(InputStream in) throws Exception {
 		Level l = null;		
 		
 		ObjectInputStream input = new ObjectInputStream(in);

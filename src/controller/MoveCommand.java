@@ -1,9 +1,9 @@
 	package controller;
 
-public class MoveCommand extends SokoCommand {
+public class MoveCommand extends SokobanCommand {
 	
 	
 	public void execute() {
-		model.Move(order);
+		controller.getModel().Move(order);
 	}
 }

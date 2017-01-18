@@ -1,6 +1,5 @@
 package model.data;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -17,5 +16,5 @@ import java.io.InputStream;
  */
 
 public interface LevelLoader {
-	public Level loadLevel(InputStream in) throws IOException;
+	public Level loadLevel(InputStream in) throws Exception;
 }

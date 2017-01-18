@@ -1,25 +1,20 @@
 package model.data;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 
 public class MyObjectLevelSaver implements LevelSaver {
 
 	@Override
-	public void saveLevel(String fileName, Level lvl) throws IOException {
-		if(lvl == null)
-			return;
+	public void saveLevel(OutputStream out, Level lvl) throws Exception {
+		ObjectOutputStream output = null;
 		
-		FileOutputStream fileOut = null;
-		ObjectOutputStream out = null;
+		output = new ObjectOutputStream(out);
 		
-		fileOut = new FileOutputStream(fileName);
-		out = new ObjectOutputStream(fileOut);
+		output.writeObject(lvl);
 		
-		out.writeObject(lvl);
 		out.close();
-		fileOut.close();
+		output.close();
 	}
 
 }

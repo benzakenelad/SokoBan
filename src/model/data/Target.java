@@ -21,7 +21,8 @@ public class Target extends GameObject implements Serializable{
 		return onMe;
 	}
 	
-	public void setOnMe(GameObject onMe) throws Exception { // set a game object on the target
+	public void setOnMe(GameObject onMe) throws Exception // set a game object on the target
+	{ 
 		this.onMe = onMe;
 		
 		if(onMe != null)
@@ -56,7 +57,8 @@ public class Target extends GameObject implements Serializable{
 	
 	// methods
 	@Override
-	public String toString() {
+	public String toString() 
+	{
 		if(this.flag == true)
 			return onMe.toString();
 		else

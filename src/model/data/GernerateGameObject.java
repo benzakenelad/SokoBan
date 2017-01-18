@@ -1,7 +1,7 @@
 package model.data;
 
-public class CreateGameObject {
-	public GameObject GenerateGerneralObject(char c) // Generate a new game object from char
+public class GernerateGameObject {
+	public GameObject GenerateObject(char c) // Generate a new game object from char
 	{
 		switch(c){
 		case '#':

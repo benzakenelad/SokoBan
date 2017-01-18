@@ -1,44 +1,36 @@
 package model.data;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
+import java.io.BufferedReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class MyTextLevelLoader implements LevelLoader {
 
 	@Override
-	public Level loadLevel(InputStream in) throws IOException {
+	public Level loadLevel(InputStream in) throws Exception {
 		
 		ArrayList<String> levelDataTXT = new ArrayList<String>();
-		Level l = new Level();
+		Level lvl = new Level();
 		String s = new String();
 		
-		// read from text file to ArrayList<String>
+		BufferedReader input = new BufferedReader(new InputStreamReader(in));
 		
-		BufferedInputStream reader = new BufferedInputStream(in);		
-		int c = 0;	
-		while(c != -1)
+		// read from text file to ArrayList<String>
+		while(s != null)
 		{
-			c = 0;
-			while(c != 10 && c != -1)
-			{	
-				c = reader.read();	
-				if(c != 10 && c != -1 && c != 13)
-					s += (char)c;
-			}
-			levelDataTXT.add(new String(s));
-			s = "";
+			s = input.readLine();
+			if(s != null)
+				levelDataTXT.add(s);
 		}
-		reader.close();
-		in.close();
+		
 		
 		// Temporary objects declaration
 		Position p = new Position();
-		GameObject go = new GameObject();
+		GameObject go;
 		int height = levelDataTXT.size();
 		GameObject[][] levelData = new GameObject[height][];
-		CreateGameObject cgo = new CreateGameObject();
+		GernerateGameObject cgo = new GernerateGameObject();
 		GameObject[] lineData = null;
 		char ch;
 		boolean flag = true;
@@ -46,8 +38,7 @@ public class MyTextLevelLoader implements LevelLoader {
 		
 		// levelData objects building
 		for(int i = 0; i < height; i++)
-		{
-			
+		{	
 			int length = levelDataTXT.get(i).length();
 			lineData = new GameObject[length];
 			for(int j = 0; j < length; j++)
@@ -55,7 +46,7 @@ public class MyTextLevelLoader implements LevelLoader {
 				p.setX(i);
 				p.setY(j);
 				ch = levelDataTXT.get(i).charAt(j);
-				go = cgo.GenerateGerneralObject(ch);			
+				go = cgo.GenerateObject(ch);			
 				
 				if(go == null)
 					continue;
@@ -63,7 +54,7 @@ public class MyTextLevelLoader implements LevelLoader {
 				go.setPos(new Position(p));
 				if(ch == 'A' && flag) // flag make sure we have only one character(player)
 				{
-					l.setCC((Character)go);
+					lvl.setCC((Character)go);
 					flag = false;
 				}
 				lineData[j] = go;
@@ -72,15 +63,19 @@ public class MyTextLevelLoader implements LevelLoader {
 			lineData = null;
 			}
 		
+		
+		
+		
+		
 		// level details set
-		l.setLevelData(levelData);
-		levelDataFill(l, levelDataTXT);
+		lvl.setLevelData(levelData);
+		levelDataFill(lvl, levelDataTXT);
 		
 		
-		return l;
+		return lvl;
 	}
 	
-	public void levelDataFill(Level l, ArrayList<String> arr)
+	public void levelDataFill(Level lvl, ArrayList<String> arr)
 	{
 		int levelWidth = -1;
 		int levelHeight = 0;
@@ -95,6 +90,7 @@ public class MyTextLevelLoader implements LevelLoader {
 			if(levelWidth < arr.get(i).length())
 				levelWidth = arr.get(i).length();
 		
+		// counting objects
 		for(int i = 0; i < levelHeight; i++)
 		{
 			int length = arr.get(i).length();
@@ -120,12 +116,13 @@ public class MyTextLevelLoader implements LevelLoader {
 			}
 		}
 
-		l.setLevelHeight(levelHeight);
-		l.setLevelWidth(levelWidth);
-		l.setEmptyCellCount(emptyCellCount);
-		l.setTargetCount(targetCount);
-		l.setWallCount(wallCount);
-		l.setBoxCount(boxCount);
+		// level data setting
+		lvl.setLevelHeight(levelHeight);
+		lvl.setLevelWidth(levelWidth);
+		lvl.setEmptyCellCount(emptyCellCount);
+		lvl.setTargetCount(targetCount);
+		lvl.setWallCount(wallCount);
+		lvl.setBoxCount(boxCount);
 	
 	}
 }

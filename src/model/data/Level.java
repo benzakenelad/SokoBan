@@ -24,11 +24,8 @@ public class Level implements Serializable{
 	private int score = 0; // score
 	private int numOfBoxesOnTargets = 0; // number of boxes on targets
 	
-	
-	// c'tors
-	public Level() {
-	}
-	
+	//c'tor
+	public Level() {}
 	
 	
 	// getters & setters
@@ -107,24 +104,30 @@ public class Level implements Serializable{
 	}
 	
 	
+	// methods
+	
 	public GameObject getGameObjectByPosition(Position p) throws Exception // return an object by his position
 	{
 		if(p == null)
-			throw new Exception("null position");
-		int x = p.getX(), y = p.getY();
+			throw new Exception("Null position.");
+		int x = p.getX();
+		int y = p.getY();
 		return levelData[x][y];
 	}
 	public void moveObjectToPosition(GameObject go, Position dest) throws Exception // move an object to a new position
 	{
-		if(go != null)
-		{
-			int x = dest.getX(), y = dest.getY();
-			if(levelData[x][y] == null)
-			{
-				go.setPos(new Position(x,y));
-				levelData[x][y] = go;	
-			}
-		}
+		if(go == null)
+			throw new Exception("Null game object.");
+		if(dest == null)
+			throw new Exception("Null position.");
+		
+		int x = dest.getX();
+		int y = dest.getY();
+		if(levelData[x][y] != null) // there is an object on this position
+			throw new Exception("Exception : Try to move an object on an excisting object.");
+			
+		go.setPos(new Position(x,y));
+		levelData[x][y] = go;	
 	}
 	public void makeSlotNullByPosition(Position p) // make the Position arrayData slot null
 	{

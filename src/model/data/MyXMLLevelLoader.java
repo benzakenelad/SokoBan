@@ -2,22 +2,22 @@ package model.data;
 
 import java.beans.XMLDecoder;
 import java.io.BufferedInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 
 public class MyXMLLevelLoader implements LevelLoader {
 
 	@Override
-	public Level loadLevel(InputStream in) throws IOException {
+	public Level loadLevel(InputStream in) throws Exception {
 		BufferedInputStream bos = new BufferedInputStream(in);
-		@SuppressWarnings("resource")
 		XMLDecoder input = new XMLDecoder(bos);
-		Level l = null;
-		l = (Level) input.readObject();
-		bos.close();
-		in.close();
 		
-		return l;
+		Level lvl = (Level) input.readObject();
+		
+		in.close();
+		bos.close();
+		input.close();
+		
+		return lvl;
 	}
 
 }

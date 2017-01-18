@@ -29,8 +29,8 @@ public class GameObject implements Serializable{
 	
 	// methods
 	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
+	public String toString() 
+	{
 		return "GameObject";
 	}
 	public String toStringXRay() // see the actual object (if there is box on target toStringXRay will return "o")

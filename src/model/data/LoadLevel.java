@@ -1,8 +1,6 @@
 package model.data;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.HashMap;
 
 public class LoadLevel{
@@ -14,23 +12,27 @@ public class LoadLevel{
 		hm.put("xml", new MyXMLLevelLoader());
 	}
 	
-	public Level Action(String fileName) throws FileNotFoundException, IOException 
+	public Level Action(String fileName) throws Exception 
 	{
-		String s = new String("");
+		String s = null;
 		int ind = fileName.indexOf('.', 0);
 		if(ind == -1)
-			return null;
+			throw new Exception("Could not load the desired Level, Please include the filename extension.");
 		s = fileName.substring(ind + 1, fileName.length()); // find the file suffix
 		
-		Level l = null;
+		Level lvl = null;
 		LevelLoader ll = null;
 		
 		ll = hm.get(s);
 		
-		if(ll != null)
-			l = ll.loadLevel(new FileInputStream(fileName));
-			
+		if(ll == null)
+			throw new Exception("Illegel filename extension.");
 		
-		return l;
+		lvl = ll.loadLevel(new FileInputStream(fileName));
+		
+		if(lvl != null)
+			return lvl;
+		else
+			throw new Exception("Could not find the file specified.");
 	}
 }

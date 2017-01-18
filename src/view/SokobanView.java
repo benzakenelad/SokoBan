@@ -4,7 +4,7 @@ import java.util.Observable;
 
 import model.data.Level;
 
-public class MyView extends Observable implements View {
+public class SokobanView extends Observable implements View {
 
 	@Override
 	public void Display(Level lvl) {

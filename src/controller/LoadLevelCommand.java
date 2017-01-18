@@ -1,11 +1,11 @@
 package controller;
 
-public class LoadLevelCommand extends SokoCommand {
+public class LoadLevelCommand extends SokobanCommand {
 
 	
 	
 	@Override
 	public void execute() {
-		model.LoadLevel(order);
+		controller.getModel().LoadLevel(order);
 	}
 }

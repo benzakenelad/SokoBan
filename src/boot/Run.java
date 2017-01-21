@@ -1,6 +1,7 @@
 package boot;
 
 import controller.SokobanController;
+import controller.server.SokobanClientHandler;
 import controller.server.SokobanServer;
 import model.SokobanModel;
 import view.SokobanView;
@@ -20,14 +21,14 @@ public class Run {
 
 		if(args.length >= 2 && args[0].compareTo("-server") == 0)
 		{
-			SokobanServer server = new SokobanServer();
+			int port = Integer.parseInt(args[1]);
+			SokobanServer server = new SokobanServer(port, new SokobanClientHandler());
 			controller.setServer(server);
 			server.addObserver(controller);
-			int port = Integer.parseInt(args[1]);
 			
 			try 
 			{
-				server.startServer(port);
+				server.startServer();
 			} catch (Exception e) 
 			{
 				controller.exit();

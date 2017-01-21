@@ -1,4 +1,4 @@
-load levelTest.txt
+load Levels/levelTest.txt
 move down
 move down
 move up
@@ -26,7 +26,7 @@ move up
 move up
 move right
 move right
-load level1.txt
+load Levels/level1.txt
 move left
 move left
 move left
@@ -55,7 +55,7 @@ move right
 move down
 move left
 move left
-load level2.txt
+load Levels/level2.txt
 move up
 move right
 move right
@@ -74,7 +74,7 @@ move down
 move right
 move right
 move right
-load level3.txt
+load Levels/level3.txt
 move right
 move right
 move right
@@ -118,7 +118,7 @@ move down
 move left
 move down
 move right
-load levelTest2.txt
+load Levels/levelTest2.txt
 move right
 move right
 move right

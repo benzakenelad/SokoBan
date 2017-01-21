@@ -39,8 +39,8 @@ public class SokobanModel extends Observable implements Model  {
 			}
 			else
 			{
-				this.setChanged();
-				this.notifyObservers("display");
+//				this.setChanged();
+//				this.notifyObservers("display");
 			}		
 			
 		} catch (Exception e) 
@@ -58,8 +58,8 @@ public class SokobanModel extends Observable implements Model  {
 			lvl = new LoadLevel().Action(note);
 			this.lvl = lvl;
 			System.out.println(note + " Loaded Successfully");
-			this.setChanged();
-			this.notifyObservers("display");
+//			this.setChanged();
+//			this.notifyObservers("display");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}

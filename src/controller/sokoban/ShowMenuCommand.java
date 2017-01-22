@@ -1,4 +1,4 @@
-package controller;
+package controller.sokoban;
 
 public class ShowMenuCommand extends SokobanCommand {
 

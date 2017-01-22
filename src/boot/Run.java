@@ -1,8 +1,9 @@
 package boot;
 
-import controller.SokobanController;
+import controller.general.Controller;
 import controller.server.SokobanClientHandler;
 import controller.server.SokobanServer;
+import controller.sokoban.SokobanController;
 import model.SokobanModel;
 import view.SokobanView;
 
@@ -10,36 +11,34 @@ public class Run {
 	
 	public static void main(String[] args) {
 		
-		
-		
 		SokobanView view = new SokobanView();
 		SokobanModel model = new SokobanModel();
-		SokobanController controller = new SokobanController(model, view);	
-		view.addObserver(controller);
-		model.addObserver(controller);
+		Controller controller = new Controller();
 		controller.start();
+		SokobanController Sokocontroller = new SokobanController(model, view, controller);	
+		view.addObserver(Sokocontroller);
+		model.addObserver(Sokocontroller);
 
 		if(args.length >= 2 && args[0].compareTo("-server") == 0)
 		{
 			int port = Integer.parseInt(args[1]);
 			SokobanServer server = new SokobanServer(port, new SokobanClientHandler());
-			controller.setServer(server);
-			server.addObserver(controller);
+			Sokocontroller.setServer(server);
+			server.addObserver(Sokocontroller);
 			
 			try 
 			{
 				server.startServer();
 			} catch (Exception e) 
 			{
-				controller.exit();
+				Sokocontroller.exit();
 				e.getMessage();
 				System.exit(1);
 			}
 		}
 		else
-			controller.CLI();
-		
-		
+			Sokocontroller.CLI();
+			
 	}
 
 }

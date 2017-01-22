@@ -6,11 +6,11 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 
-public class SokobanClientHandler implements ClientHandler{
-	Server server = null;
+public class SokobanClientHandler extends ClientHandler{
 	
 	@Override
-	public void HandleClient(InputStream inFromClient, OutputStream outToClient) throws Exception {
+	public void HandleClient(InputStream inFromClient, OutputStream outToClient) throws Exception // handle a client by a well defined protocal
+	{
 
 		// Initialize streams
 		InputStreamReader InFromClient = new InputStreamReader(inFromClient);	
@@ -46,21 +46,8 @@ public class SokobanClientHandler implements ClientHandler{
 		toClient.close();
 
 		if(inputLine.compareTo("exit") == 0)
-		{
 			server.notifyObs(inputLine);
-			try 
-			{
-				Thread.sleep(10);
-			} catch (InterruptedException e) 
-			{
-				e.printStackTrace();
-			}
-		}
+		
+		try {Thread.sleep(10);} catch (InterruptedException e) {}
 	}
-
-	@Override
-	public void setServer(Server server) {
-		this.server = server;	
-	}
-
 }

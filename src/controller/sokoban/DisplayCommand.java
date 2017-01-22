@@ -1,10 +1,10 @@
-package controller;
+package controller.sokoban;
 
 public class DisplayCommand extends SokobanCommand {
 
     
 	public void execute() {
-		controller.getView().Display(controller.getModel().getLvl());
+		view.Display(model.getLvl());
 	}
 
 }

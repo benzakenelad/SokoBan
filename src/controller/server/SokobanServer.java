@@ -5,9 +5,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Observable;
 
-public class SokobanServer extends Observable implements Server {
+public class SokobanServer implements Server {
 	private volatile boolean stop = false;
 	private int port = 0;
 	private ClientHandler ch = null;
@@ -15,7 +14,6 @@ public class SokobanServer extends Observable implements Server {
 	public SokobanServer(int port, ClientHandler ch) {
 		this.port = port;
 		this.ch = ch;
-		ch.setServer(this);
 	}
 	
 	@Override
@@ -81,11 +79,6 @@ public class SokobanServer extends Observable implements Server {
 	@Override
 	public void stopServer() {
 		stop = true;		
-	}
-	public void notifyObs(String note)
-	{
-		setChanged();
-		notifyObservers(note);
 	}
 
 }

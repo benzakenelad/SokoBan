@@ -23,6 +23,8 @@ public class Level implements Serializable{
 	private int emptyCellCount = 0; // empty cells counter
 	private int score = 0; // score
 	private int numOfBoxesOnTargets = 0; // number of boxes on targets
+	private int Steps = 0; // player steps counter
+	private boolean levelFinishedFlag = false; 
 	
 	//c'tor
 	public Level() {}
@@ -102,7 +104,18 @@ public class Level implements Serializable{
 	public void setNumOfBoxesOnTargets(int numOfBoxesOnTargets) {
 		this.numOfBoxesOnTargets = numOfBoxesOnTargets;
 	}
-	
+	public int getSteps() {
+		return Steps;
+	}
+	public void setSteps(int steps) {
+		Steps = steps;
+	}
+	public boolean isLevelFinishedFlag() {
+		return levelFinishedFlag;
+	}
+	public void setLevelFinishedFlag(boolean levelFinishedFlag) {
+		this.levelFinishedFlag = levelFinishedFlag;
+	}
 	
 	// methods
 	
@@ -154,6 +167,7 @@ public class Level implements Serializable{
 				}
 			}
 		}
+		levelFinishedFlag =  true;
 		return true;
 	}
 	public ArrayList<String> getLevelByArrayListOfStrings() // returns an ArrayList<String> object of the level data by the convention (box = @, wall = #, character = A, target = o)

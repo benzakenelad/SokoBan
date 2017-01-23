@@ -16,6 +16,7 @@ public class MySokobanPolicy extends Policy {
 		boolean playerWasOnTarget = player.isOnTarget();
 		
 		if(moveThePlayerIfHeCan(lvl, dir) == true) // the player moved (here we clear the slot that the player was on)
+		{
 			if(playerWasOnTarget == true) // in case the player was on target
 			{
 				Target t = (Target)lvl.getGameObjectByPosition(source);
@@ -24,10 +25,13 @@ public class MySokobanPolicy extends Policy {
 			else // in case the player was not on target
 				lvl.makeSlotNullByPosition(source);
 		
-		if(lvl.getGameObjectByPosition(player.getPos()).toStringXRay() == "o") // if the player went on target
-			player.setOnTarget(true);
+			if(lvl.getGameObjectByPosition(player.getPos()).toStringXRay() == "o") // if the player went on target / off target
+				player.setOnTarget(true);
+			else
+				player.setOnTarget(false);
+		}
 		else
-			player.setOnTarget(false);
+			throw new Exception("Player did not move.");
 		
 	}
 	
@@ -48,9 +52,9 @@ public class MySokobanPolicy extends Policy {
 		GameObject afterDestObj = lvl.getGameObjectByPosition(afterDestPos);
 			
 		if(destObj != null)
-			if(destObj.toString() == "@") // case we have one box in front of us
+			if(destObj.toString() == "@" || destObj.toString() == "$") // case we have one box in front of us
 				if(afterDestObj != null)
-					if(afterDestObj.toString() == "@" || afterDestObj.toString() == "#") // in case we have 2 boxes in front of us, or box and wall in front of us
+					if(afterDestObj.toString() == "$" || afterDestObj.toString() == "@" || afterDestObj.toString() == "#") // in case we have 2 boxes in front of us, or box and wall in front of us
 						return false;	
 			
 		
@@ -71,7 +75,7 @@ public class MySokobanPolicy extends Policy {
 			}
 			else // there is a box on the target
 			{
-				if(afterDestObj == null) // the box is on target and can move 
+				if(afterDestObj == null) // there is a box on the target and can move (empty slot after the target+box)
 				{
 					GameObject go = t.getOnMe();
 					lvl.moveObjectToPosition(go, afterDestPos);
@@ -79,7 +83,7 @@ public class MySokobanPolicy extends Policy {
 					makePlayerOnTarget(player, t);
 					return true;
 					
-				}else if(afterDestObj.toStringXRay() == "o") // if we are here the nextStepObj is an empty target
+				}else if(afterDestObj.toString() == "o") // if we are here the nextStepObj is an empty target
 				{
 					Target t2 = (Target)afterDestObj;
 					GameObject go = t.getOnMe();
@@ -90,16 +94,16 @@ public class MySokobanPolicy extends Policy {
 					return true;
 				}
 			}
-		}else if(destObj.toStringXRay() == "@") // case there is a box ahead
+		}else if(destObj.toString() == "@") // case there is a box ahead (the box is not on target)
 		{
-			if (afterDestObj == null) // after a box there is an empty slot
+			if (afterDestObj == null) // after the box there is an empty slot
 			{
 				lvl.moveObjectToPosition(destObj, afterDestPos);
 				lvl.makeSlotNullByPosition(destPos);
 				lvl.moveObjectToPosition(player, destPos);
 				return true;
 				
-			}else if(afterDestObj.toStringXRay() == "o") // if we are here the afterDestObj is an empty target
+			}else if(afterDestObj.toString() == "o") // if we are here the afterDestObj is an empty target
 			{
 				Target t2 = (Target)afterDestObj;
 				t2.setOnMe(destObj);

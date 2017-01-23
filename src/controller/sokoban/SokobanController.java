@@ -8,8 +8,10 @@ import java.util.Scanner;
 import controller.general.Command;
 import controller.general.Controller;
 import controller.server.Server;
+import controller.server.SokobanClientHandler;
+import controller.server.SokobanServer;
 import model.Model;
-import view.View;
+import view.GUI.View;
 
 
 public class SokobanController implements Observer {
@@ -26,11 +28,25 @@ public class SokobanController implements Observer {
 	
 	
 	// MyController C'TOR
-	public SokobanController(Model model, View view, Controller controller) {
+	public SokobanController(Model model, View view) {
 		this.model = model;
 		this.view = view;
-		this.controller = controller;
+		this.controller = new Controller();
+		controller.start();
 		this.initializeSokoCommandHM();
+	}
+	
+	public void StartPlayWithServer(int port) throws Exception
+	{
+		SokobanClientHandler sch = new SokobanClientHandler();
+		sch.addObserver(this);
+		server = new SokobanServer(port, sch);
+		server.startServer();
+	}
+	
+	public void StartPlayWithCLI()
+	{
+		CLI();
 	}
 	
 	// CLI
@@ -51,8 +67,6 @@ public class SokobanController implements Observer {
 			
 			Command command = generateACommand(note);
 			controller.insertCommand(command);
-			
-			try { Thread.sleep(10);} catch (InterruptedException e1) {} // DELETE AFTER ALL TESTING
 		}	
 	}
 
@@ -92,18 +106,6 @@ public class SokobanController implements Observer {
 		}
 		else
 		    return null;
-	}
-
-	public Model getModel() {
-		return this.model;
-	}
-
-	public View getView() {
-		return this.view;
-	}
-
-	public void setServer(Server server) {
-		this.server = server;
 	}
 	
 	private void stopTheCLI() {

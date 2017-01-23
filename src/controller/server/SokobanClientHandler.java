@@ -5,8 +5,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.Observable;
 
-public class SokobanClientHandler extends ClientHandler{
+public class SokobanClientHandler extends Observable implements ClientHandler{
 	
 	@Override
 	public void HandleClient(InputStream inFromClient, OutputStream outToClient) throws Exception // handle a client by a well defined protocal
@@ -38,7 +39,8 @@ public class SokobanClientHandler extends ClientHandler{
 				stopPlay = true;
 				continue;
 			}
-			server.notifyObs(inputLine);
+			setChanged();
+			notifyObservers(inputLine);
 		}
 		
 		InFromClient.close();
@@ -46,7 +48,10 @@ public class SokobanClientHandler extends ClientHandler{
 		toClient.close();
 
 		if(inputLine.compareTo("exit") == 0)
-			server.notifyObs(inputLine);
+		{
+			setChanged();
+			notifyObservers(inputLine);
+		}
 		
 		try {Thread.sleep(10);} catch (InterruptedException e) {}
 	}

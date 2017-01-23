@@ -10,12 +10,8 @@ public class Controller{
 	
 	public void insertCommand(Command command)  // insert new command to the blocking queue
 	{
-		
 		if(command != null)
-		{
-			try { Thread.sleep(10);} catch (InterruptedException e1) {} // DELETE AFTER ALL TESTING
 			bqueue.add(command);
-		}
 	}
 	
 	public void start() // create new threads that runs the blocking queue

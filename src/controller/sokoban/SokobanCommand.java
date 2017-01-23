@@ -2,7 +2,7 @@ package controller.sokoban;
 
 import controller.general.Command;
 import model.Model;
-import view.View;
+import view.GUI.View;
 
 public abstract class SokobanCommand implements Command{
 	protected String order = null;

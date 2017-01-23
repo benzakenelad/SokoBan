@@ -60,7 +60,12 @@ public class Target extends GameObject implements Serializable{
 	public String toString() 
 	{
 		if(this.flag == true)
-			return onMe.toString();
+		{
+			if(this.getOnMe().toString().compareTo("A") == 0)
+				return "B";
+			else
+				return "$";
+		}
 		else
 			return "o";
 	}

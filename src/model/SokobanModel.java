@@ -33,20 +33,25 @@ public class SokobanModel extends Observable implements Model  {
 			new Move1Step().Action(lvl, new MySokobanPolicy(), note); // depend what policy we want
 			if(lvl.levelCompletionCheck() == true)
 			{
+				this.lvl = null;
 				this.setChanged();
 				this.notifyObservers("display");
 				System.out.println("Congratulations, Level Completed");
+				
 			}
 			else
 			{
-//				this.setChanged();
-//				this.notifyObservers("display");
+				if(lvl != null)
+					lvl.setSteps(lvl.getSteps() + 1);
+				this.setChanged();
+				this.notifyObservers("display");
 			}		
 			
 		} catch (Exception e) 
 		{
-			System.out.println(e.getMessage());
+//			System.out.println(e.getMessage());
 		}
+
 		
 	}
 
@@ -58,8 +63,8 @@ public class SokobanModel extends Observable implements Model  {
 			lvl = new LoadLevel().Action(note);
 			this.lvl = lvl;
 			System.out.println(note + " Loaded Successfully");
-//			this.setChanged();
-//			this.notifyObservers("display");
+			this.setChanged();
+			this.notifyObservers("display");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}

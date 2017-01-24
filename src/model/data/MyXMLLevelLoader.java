@@ -14,8 +14,7 @@ public class MyXMLLevelLoader implements LevelLoader {
 		Level lvl = (Level) input.readObject();
 		
 		in.close();
-//		bos.close();
-//		input.close();
+		input.close();
 		
 		return lvl;
 	}

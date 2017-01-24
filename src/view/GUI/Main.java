@@ -1,6 +1,6 @@
 package view.GUI;
 	
-import controller.sokoban.SokobanController;
+import controller.SokobanController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -10,6 +10,7 @@ import model.SokobanModel;
 
 
 public class Main extends Application {
+	private static String note;
 	
 	@Override
 	public void start(Stage primaryStage) {
@@ -20,7 +21,7 @@ public class Main extends Application {
 			
 			MainWindowController view = (MainWindowController)loader.getController();
 			SokobanModel model = new SokobanModel();
-			SokobanController controller = new SokobanController(model, view);
+			SokobanController controller = new SokobanController(model, view, getNote());
 			view.addObserver(controller);
 			model.addObserver(controller);
 
@@ -36,7 +37,23 @@ public class Main extends Application {
 	}
 	
 	public static void main(String[] args) {
-		launch(args);		
+		
+		String noteForController = new String("");
+			
+		if(args.length >= 2 && args[0].compareTo("-server") == 0)			
+			noteForController = args[0] + " " + args[1];
+		
+		setNote(noteForController);
+		
+		launch(args); // application launch		
+	}
+
+	public static String getNote() {
+		return note;
+	}
+
+	public static void setNote(String note) {
+		Main.note = note;
 	}
 	
 }

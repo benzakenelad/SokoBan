@@ -26,54 +26,22 @@ public  class MainWindowController extends Observable implements View, Initializ
 	// Data Members
 	@FXML
 	LevelGraphicDisplay levelGraphicDisplay;
-	@FXML
+	@FXML 
 	Text steps;
 	@FXML	
 	Text timer;
+	
 	 
 	
 	//Data Members
-	private boolean resetTimerFlag = true;
-	private int count = 0;
-	private StringProperty counter;
-	Timer t = null;
-	
-	public MainWindowController() {
-
-		//Music initialization
-		String musicFile = "./resources/song.mp3";   
-		Media sound = new Media(new File(musicFile).toURI().toString());
-		MediaPlayer mediaPlayer = new MediaPlayer(sound);
-		mediaPlayer.play();
-	}
+	private boolean resetTimerFlag = true; // reset the time flag
+	private int count = 0; // time count
+	private StringProperty counter; // timer string
+	Timer timerThread = null; // timer
+	MediaPlayer mediaPlayer = null; // media player
 	
 	
-	public void saveFile()
-	{
-		FileChooser fc = new FileChooser();
-		fc.setTitle("Save SokoBan's Level File");
-		fc.setInitialDirectory(new File("./Levels"));
-		File chosen = fc.showSaveDialog(null);
-		if(chosen != null)
-		{
-			setChanged();
-			notifyObservers("save " + chosen.getPath());
-		}
-	}
-	
-	public void openFile() 
-	{
-		FileChooser fc = new FileChooser();
-		fc.setTitle("Open SokoBan's Level File");
-		fc.setInitialDirectory(new File("./Levels"));
-		File chosen = fc.showOpenDialog(null);
-		if(chosen != null)
-		{
-			resetTimerFlag = true;
-			setChanged();
-			notifyObservers("load " + chosen.getPath());
-		}
-	}
+	// Methods
 	@Override
 	public void Display(Level lvl) {
 		if(lvl == null)
@@ -81,12 +49,16 @@ public  class MainWindowController extends Observable implements View, Initializ
 			levelGraphicDisplay.finishDraw();
 			return;
 		}
-		try {
+		
+		try 
+		{
 			levelGraphicDisplay.setMaxHeight(lvl.getLevelHeight());
 			levelGraphicDisplay.setMaxWidth(lvl.getLevelWidth());
 		} catch (Exception e) {	e.printStackTrace();}
-		levelGraphicDisplay.setLevelData(lvl.getLevelByArrayListOfStrings()); 
-		steps.setText("Steps: " + Integer.toString(lvl.getSteps()));
+		
+		levelGraphicDisplay.setLevelData(lvl.getLevelByArrayListOfStrings()); // set the new level details
+		
+		this.setStepsText("Steps: " + Integer.toString(lvl.getSteps()));
 		
 		if(resetTimerFlag == true)
 		{
@@ -94,22 +66,19 @@ public  class MainWindowController extends Observable implements View, Initializ
 			resetTimerFlag = false;
 		}
 	}
-	
-	public void safeExit()
-	{
-		setChanged();
-		notifyObservers("exit");
-		Platform.exit();
-		System.exit(0);
-	}
 
 	@Override
-	public void initialize(java.net.URL location, ResourceBundle resources) {
+	public void initialize(java.net.URL location, ResourceBundle resources) 
+	{
+		
+		// start the background music
+		startMusic();
+		
 		// time initialize
 		counter = new SimpleStringProperty();
 		
-		t=new  Timer();
-		t.scheduleAtFixedRate(new TimerTask() {
+		timerThread = new  Timer();
+		timerThread.scheduleAtFixedRate(new TimerTask() {
 				
 			@Override
 			public void run() {
@@ -141,6 +110,9 @@ public  class MainWindowController extends Observable implements View, Initializ
 					setChanged();
 					notifyObservers("move right");
 					break;
+				case ESCAPE:
+					close();
+					break;
 				default:
 					break;
 				}
@@ -149,11 +121,68 @@ public  class MainWindowController extends Observable implements View, Initializ
 		});
 	}
 	
-	public void resetTimer()
+	public void resetTimer() // reset the game timer
 	{
 		count=0;
 		try { Thread.sleep(500); } catch (InterruptedException e) { e.printStackTrace();}
 		timer.textProperty().bind(counter);
 		timer.setVisible(true);
 	}
+	
+	private void startMusic() // start the background music
+	{
+		//Music initialization
+		String musicFile = "C:/Users/elad/git/SokoProject/resources/song.mp3";   
+		Media sound = new Media(new File(musicFile).toURI().toString());
+		mediaPlayer = new MediaPlayer(sound);
+		mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+		mediaPlayer.play();
+	}
+	
+	public void saveFile()
+	{
+		FileChooser fc = new FileChooser();
+		fc.setTitle("Save SokoBan's Level File");
+		fc.setInitialDirectory(new File("./Levels"));
+		File chosen = fc.showSaveDialog(null);
+		if(chosen != null)
+		{
+			setChanged();
+			notifyObservers("save " + chosen.getPath());
+		}
+	}
+	
+	public void openFile() 
+	{
+		FileChooser fc = new FileChooser();
+		fc.setTitle("Open SokoBan's Level File");
+		fc.setInitialDirectory(new File("./Levels"));
+		File chosen = fc.showOpenDialog(null);
+		if(chosen != null)
+		{
+			System.out.println(chosen.getPath());
+			resetTimerFlag = true;
+			setChanged();
+			notifyObservers("load " + chosen.getPath());
+		}
+	}
+	
+	public void close()
+	{
+		setChanged();
+		notifyObservers("exit");
+	}
+	
+	public void safeExit(int value)
+	{
+		mediaPlayer.stop();
+		timerThread.cancel();
+		Platform.exit();
+	}
+	
+	private void setStepsText(String text)
+	{
+		steps.setText(text);
+	}
+	
 }

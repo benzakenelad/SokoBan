@@ -1,4 +1,4 @@
-package controller.sokoban;
+package controller.sokobancommands;
 
 import controller.general.Command;
 import model.Model;

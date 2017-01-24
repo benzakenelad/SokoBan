@@ -3,8 +3,11 @@ package controller.general;
 import java.util.concurrent.ArrayBlockingQueue;
 
 public class Controller{
-	private ArrayBlockingQueue<Command> bqueue = new ArrayBlockingQueue<Command>(2048);
-	private volatile boolean stopBQueueThread = false;
+	
+	// Data members
+	private ArrayBlockingQueue<Command> bqueue = new ArrayBlockingQueue<Command>(1024); // blocking queue
+	private volatile boolean stopBQueueThread = false; // 
+	private Thread startThread;
 	
 	
 	
@@ -16,7 +19,7 @@ public class Controller{
 	
 	public void start() // create new threads that runs the blocking queue
 	{
-		new Thread(new Runnable()
+		startThread = new Thread(new Runnable()
 		{	
 			Command command;	
 			@Override
@@ -33,7 +36,8 @@ public class Controller{
 					}
 				}
 			}
-		}).start();
+		});
+		startThread.start();
 	}
 	
 	public void stop() // Stop the thread that runs the blocking queue

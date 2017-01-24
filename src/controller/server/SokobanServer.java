@@ -7,10 +7,14 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class SokobanServer implements Server {
+	
+	//Data members
 	private volatile boolean stop = false;
 	private int port = 0;
 	private ClientHandler ch = null;
+	private Thread serverThread;
 	
+	//C'tor
 	public SokobanServer(int port, ClientHandler ch) {
 		this.port = port;
 		this.ch = ch;
@@ -22,7 +26,7 @@ public class SokobanServer implements Server {
 			throw new Exception("null client handler");	
 		
 		
-		new Thread(new Runnable()  // server and client communication thread
+		serverThread = new Thread(new Runnable()  // server and client communication thread
 		{	
 			@Override
 			public void run()
@@ -34,7 +38,8 @@ public class SokobanServer implements Server {
 					e.printStackTrace();
 				}
 			}
-		}).start();
+		});
+		serverThread.start();
 	}
 
 	private void runServer() throws Exception
@@ -78,7 +83,8 @@ public class SokobanServer implements Server {
 	
 	@Override
 	public void stopServer() {
-		stop = true;		
+		stop = true;
+		serverThread.stop();
 	}
 
 }

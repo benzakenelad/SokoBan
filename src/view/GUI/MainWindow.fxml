@@ -17,7 +17,7 @@
             <items>
                   <MenuItem mnemonicParsing="false" onAction="#openFile" text="Open" />
                   <MenuItem mnemonicParsing="false" onAction="#saveFile" text="Save" />
-                  <MenuItem mnemonicParsing="false" onAction="#safeExit" text="Close" />
+                  <MenuItem mnemonicParsing="false" onAction="#close" text="Close" />
             </items>
           </Menu>
         </menus>
@@ -35,6 +35,6 @@
       </VBox>
    </left>
    <center> 
-          <LevelGraphicDisplay fx:id="levelGraphicDisplay" height="700.0" width="700.0" BorderPane.alignment="CENTER" wallFileName = "./resources/wall.jpg" boxFileName="./resources/box.jpg" playerFileName="./resources/player.jpg" floorFileName="./resources/floor.jpg" targetFileName="./resources/target.jpg" playerOnTargetFileName="./resources/playerontarget.jpg" boxOnTargetFileName="./resources/boxontarget.jpg" congratulations="./resources/congra.jpg" />           
+          <LevelGraphicDisplay fx:id="levelGraphicDisplay" height="700.0" width="700.0" BorderPane.alignment="CENTER" wallFileName = "./resources/wall.jpg" boxFileName="./resources/box.jpg" playerFileName="./resources/player.jpg" floorFileName="./resources/floor.jpg" targetFileName="./resources/target.jpg" playerOnTargetFileName="./resources/playerontarget.jpg" boxOnTargetFileName="./resources/boxontarget.jpg" congratulationsFileName="./resources/congra.jpg" />           
    </center>
 </BorderPane>

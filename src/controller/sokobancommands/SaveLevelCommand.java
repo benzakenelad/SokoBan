@@ -1,4 +1,4 @@
-package controller.sokoban;
+package controller.sokobancommands;
 
 public class SaveLevelCommand extends SokobanCommand{
 	

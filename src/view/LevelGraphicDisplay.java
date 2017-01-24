@@ -25,7 +25,7 @@ public class LevelGraphicDisplay extends Canvas
 	private StringProperty targetFileName;
 	private StringProperty boxOnTargetFileName;
 	private StringProperty playerOnTargetFileName;
-	private StringProperty congratulations;
+	private StringProperty congratulationsFileName;
 
 	// C'TOR
 	public LevelGraphicDisplay() {
@@ -37,14 +37,14 @@ public class LevelGraphicDisplay extends Canvas
 		boxFileName = new SimpleStringProperty();
 		boxOnTargetFileName = new SimpleStringProperty();
 		playerOnTargetFileName = new SimpleStringProperty();
-		congratulations = new SimpleStringProperty();
+		congratulationsFileName = new SimpleStringProperty();
 	}
 	
 	public void finishDraw()
 	{
 		Image congra = null;
 		try {
-			congra = new Image(new FileInputStream(congratulations.get()));
+			congra = new Image(new FileInputStream(congratulationsFileName.get()));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -203,12 +203,12 @@ public class LevelGraphicDisplay extends Canvas
 		this.playerOnTargetFileName.set(playerOnTargetFileName);
 	}
 
-	public String getCongratulations() {
-		return congratulations.get();
+	public String getCongratulationsFileName() {
+		return congratulationsFileName.get();
 	}
 
-	public void setCongratulations(String congratulations) {
-		this.congratulations.set(congratulations);
+	public void setCongratulationsFileName(String congratulationsFileName) {
+		this.congratulationsFileName.set(congratulationsFileName);
 	}
 
 

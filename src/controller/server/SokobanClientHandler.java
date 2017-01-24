@@ -53,6 +53,6 @@ public class SokobanClientHandler extends Observable implements ClientHandler{
 			notifyObservers(inputLine);
 		}
 		
-		try {Thread.sleep(10);} catch (InterruptedException e) {}
+		try {Thread.sleep(100);} catch (InterruptedException e) {}
 	}
 }

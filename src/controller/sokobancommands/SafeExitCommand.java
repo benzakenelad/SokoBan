@@ -1,4 +1,6 @@
-	package controller.sokoban;
+	package controller.sokobancommands;
+
+import controller.SokobanController;
 
 public class SafeExitCommand extends SokobanCommand {
 	private SokobanController sokobanController = null;

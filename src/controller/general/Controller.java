@@ -2,6 +2,8 @@ package controller.general;
 
 import java.util.concurrent.ArrayBlockingQueue;
 
+import controller.sokobancommands.Command;
+
 public class Controller{
 	
 	// Data members

@@ -7,7 +7,9 @@ import model.data.Position;
 public abstract class Policy {
 	public abstract void check(Level lvl, Direction dir) throws Exception;
 	
-	public Position PositionCalculator(Position source, Direction dir) throws Exception // dir = 1 = left, dir = 2 = up, dir = 3 = right, dir = 4 = down
+	
+	
+	public Position PositionCalculator(Position source, Direction dir) throws Exception 
 	{
 		switch(dir){
 		case left:
@@ -22,4 +24,5 @@ public abstract class Policy {
 		
 		}
 	}
+	
 }

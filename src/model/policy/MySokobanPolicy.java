@@ -11,19 +11,37 @@ public class MySokobanPolicy extends Policy {
 
 	public void check(Level lvl, Direction dir) throws Exception 
 	{ 
+		///////   Movable check ////////
+		try
+		{
+		MySokoBanCharPolicy policy = new MySokoBanCharPolicy();
+		if(policy.moveIsLegal(lvl.getLevelByChar2DArray(), dir) == true)
+			System.out.println("Can move");
+		else
+			System.out.println("Can not move");
+		}catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+		
+		
 		Character player = lvl.getCC();
-		Position source = new Position(player.getPos());
+		Position sourcePos = new Position(player.getPos());
 		boolean playerWasOnTarget = player.isOnTarget();
 		
 		if(moveThePlayerIfHeCan(lvl, dir) == true) // the player moved (here we clear the slot that the player was on)
 		{
 			if(playerWasOnTarget == true) // in case the player was on target
 			{
-				Target t = (Target)lvl.getGameObjectByPosition(source);
+				Target t = (Target)lvl.getGameObjectByPosition(sourcePos);
 				t.setOnMe(null);
 			}
 			else // in case the player was not on target
-				lvl.makeSlotNullByPosition(source);
+				lvl.makeSlotNullByPosition(sourcePos);
 		
 			if(lvl.getGameObjectByPosition(player.getPos()).toStringXRay() == "o") // if the player went on target / off target
 				player.setOnTarget(true);
@@ -39,17 +57,17 @@ public class MySokobanPolicy extends Policy {
 	{
 		Character player = lvl.getCC();
 		Position sourcePos = null, destPos = null, afterDestPos = null;
-		sourcePos = new Position(player.getPos());
-		destPos = PositionCalculator(sourcePos, dir);
+		sourcePos = new Position(player.getPos());  // calculate the source position
+		destPos = PositionCalculator(sourcePos, dir); // Initialize the destination object
 			
-		GameObject destObj = lvl.getGameObjectByPosition(destPos);
+		GameObject destObj = lvl.getGameObjectByPosition(destPos); // get the destination object (if null its empty slot)
 		
 		if(destObj != null)
 			if(destObj.toString() == "#") // case we have wall in front of us
 				return false;
 		
-		afterDestPos = PositionCalculator(destPos, dir);
-		GameObject afterDestObj = lvl.getGameObjectByPosition(afterDestPos);
+		afterDestPos = PositionCalculator(destPos, dir); // calculate the after destination position
+		GameObject afterDestObj = lvl.getGameObjectByPosition(afterDestPos); // Initialize the after destination object
 			
 		if(destObj != null)
 			if(destObj.toString() == "@" || destObj.toString() == "$") // case we have one box in front of us
@@ -58,11 +76,11 @@ public class MySokobanPolicy extends Policy {
 						return false;	
 			
 		
-		// in case he can move //
+		/////// in case he can move ////////
 		
 		if(destObj == null) // if there is nothing ahead the player move
 		{
-			lvl.moveObjectToPosition(player, destPos);
+			lvl.moveObjectToPosition(player, destPos); // set the player new position and update the levelData array	
 			return true;
 			
 		}else if(destObj.toStringXRay() == "o") // case there is a target ahead 

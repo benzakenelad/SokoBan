@@ -28,7 +28,7 @@ public class Target extends GameObject implements Serializable{
 		if(onMe != null)
 		{
 			setFlag(true);
-			if(onMe.toStringXRay() == "@")
+			if(onMe.toString() == "@")
 				setFinishMoveFlag(true);
 			else
 				setFinishMoveFlag(false);
@@ -43,7 +43,7 @@ public class Target extends GameObject implements Serializable{
 		return flag;
 	}
 	
-	public void setFlag(boolean flag) {
+	private void setFlag(boolean flag) {
 		this.flag = flag;
 	}
 	
@@ -51,7 +51,7 @@ public class Target extends GameObject implements Serializable{
 		return finishMoveFlag;
 	}
 
-	public void setFinishMoveFlag(boolean finishMoveFlag) {
+	private void setFinishMoveFlag(boolean finishMoveFlag) {
 		this.finishMoveFlag = finishMoveFlag;
 	}
 	

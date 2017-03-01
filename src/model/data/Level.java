@@ -190,5 +190,20 @@ public class Level implements Serializable{
 		}
 		return levelDataTXT;
 	}
+	public char[][] getLevelByChar2DArray()
+	{
+		char[][] data = new char[this.levelHeight][];
+		for(int i = 0; i < this.levelHeight; i++)
+			data[i] = new char[this.levelWidth];
+
+		ArrayList<String> leveldata = getLevelByArrayListOfStrings();
+		
+		for(int i = 0; i < this.levelHeight; i++)
+			for(int j = 0; j < this.levelWidth; j++)
+				data[i][j] = leveldata.get(i).charAt(j);
+			
+
+		return data;
+	}
 	
 }

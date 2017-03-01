@@ -98,13 +98,13 @@ public class MyTextLevelLoader implements LevelLoader {
 			{
 				char c = arr.get(i).charAt(j);
 				switch(c){
-				case '#':
+				case '#':    // case its wall
 					wallCount++;
 					break;
-				case '@':
+				case '@':    // case its box
 					boxCount++;
 					break;
-				case 'o':
+				case 'o':    // case its target
 					targetCount++;
 					break;
 				case ' ':

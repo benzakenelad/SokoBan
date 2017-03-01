@@ -14,8 +14,6 @@ public class SokobanModel extends Observable implements Model  {
 	private Level lvl = null;
 
 	
-	
-	
 	public Level getLvl() {
 		return lvl;
 	}

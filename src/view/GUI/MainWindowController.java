@@ -5,6 +5,7 @@ import java.util.Observable;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ArrayBlockingQueue;
 
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
@@ -74,10 +75,13 @@ public  class MainWindowController extends Observable implements View, Initializ
 		// start the background music
 		startMusic();
 		
+		// draw the welcome image
+		levelGraphicDisplay.welcomeDraw();
+		
 		// time initialize
 		counter = new SimpleStringProperty();
 		
-		timerThread = new  Timer();
+		timerThread = new Timer();
 		timerThread.scheduleAtFixedRate(new TimerTask() {
 				
 			@Override
@@ -132,7 +136,7 @@ public  class MainWindowController extends Observable implements View, Initializ
 	private void startMusic() // start the background music
 	{
 		//Music initialization
-		String musicFile = "C:/Users/elad/git/SokoProject/resources/song.mp3";   
+		String musicFile = "./resources/song.mp3";   
 		Media sound = new Media(new File(musicFile).toURI().toString());
 		mediaPlayer = new MediaPlayer(sound);
 		mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
@@ -163,7 +167,7 @@ public  class MainWindowController extends Observable implements View, Initializ
 			System.out.println(chosen.getPath());
 			resetTimerFlag = true;
 			setChanged();
-			notifyObservers("load " + chosen.getPath());
+			notifyObservers("load Levels/" + chosen.getName());
 		}
 	}
 	

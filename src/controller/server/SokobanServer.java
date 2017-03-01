@@ -81,6 +81,7 @@ public class SokobanServer implements Server {
 
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public void stopServer() {
 		stop = true;

@@ -4,11 +4,11 @@ import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 
-import controller.general.Command;
 import controller.general.Controller;
 import controller.server.Server;
 import controller.server.SokobanClientHandler;
 import controller.server.SokobanServer;
+import controller.sokobancommands.Command;
 import controller.sokobancommands.DisplayCommand;
 import controller.sokobancommands.LoadLevelCommand;
 import controller.sokobancommands.MoveCommand;
@@ -30,7 +30,7 @@ public class SokobanController implements Observer {
 	
 //	private boolean stopCLI = false;
 	
-	HashMap<String, SokobanCommand> sokoCommandHM = null;
+	HashMap<String, SokobanCommand> sokoCommandHashMap = null;
 	
 	
 	// MyController C'TOR
@@ -80,11 +80,10 @@ public class SokobanController implements Observer {
 	}
 	
 	private Command generateACommand(String[] note){
-		SokobanCommand command = sokoCommandHM.get(note[0]);
+		SokobanCommand command = sokoCommandHashMap.get(note[0]);
 		if(command != null)
 		{
-			if(note.length >= 2)
-				
+			if(note.length >= 2)	
 				command.setOrder(note[1]);
 			command.setModel(model);
 			command.setView(view);
@@ -96,13 +95,13 @@ public class SokobanController implements Observer {
 
 	private void initializeSokoCommandHM()
 	{
-		sokoCommandHM = new HashMap<String, SokobanCommand>();
-		sokoCommandHM.put("move", new MoveCommand());
-		sokoCommandHM.put("load", new LoadLevelCommand());
-		sokoCommandHM.put("save", new SaveLevelCommand());
-		sokoCommandHM.put("exit", new SafeExitCommand(this));
-		sokoCommandHM.put("display", new DisplayCommand());
-		sokoCommandHM.put("menu", new ShowMenuCommand());
+		sokoCommandHashMap = new HashMap<String, SokobanCommand>();
+		sokoCommandHashMap.put("move", new MoveCommand());
+		sokoCommandHashMap.put("load", new LoadLevelCommand());
+		sokoCommandHashMap.put("save", new SaveLevelCommand());
+		sokoCommandHashMap.put("exit", new SafeExitCommand(this));
+		sokoCommandHashMap.put("display", new DisplayCommand());
+		sokoCommandHashMap.put("menu", new ShowMenuCommand());
 	}
 	
 	/*	

@@ -26,6 +26,7 @@ public class LevelGraphicDisplay extends Canvas
 	private StringProperty boxOnTargetFileName;
 	private StringProperty playerOnTargetFileName;
 	private StringProperty congratulationsFileName;
+	private StringProperty welcomeFileName;
 
 	// C'TOR
 	public LevelGraphicDisplay() {
@@ -38,6 +39,7 @@ public class LevelGraphicDisplay extends Canvas
 		boxOnTargetFileName = new SimpleStringProperty();
 		playerOnTargetFileName = new SimpleStringProperty();
 		congratulationsFileName = new SimpleStringProperty();
+		welcomeFileName = new SimpleStringProperty();
 	}
 	
 	public void finishDraw()
@@ -53,6 +55,20 @@ public class LevelGraphicDisplay extends Canvas
 		GraphicsContext gc = getGraphicsContext2D();
 		if(congra != null)
 			gc.drawImage(congra, 0, 0, getWidth(), getHeight());
+	}
+	
+	public void welcomeDraw()
+	{
+		Image welcome = null;
+		try {
+			welcome = new Image(new FileInputStream(welcomeFileName.get()));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		GraphicsContext gc = getGraphicsContext2D();
+		if(welcome != null)
+			gc.drawImage(welcome, 0, 0, getWidth(), getHeight());
 	}
 	
 	public void redraw()
@@ -209,6 +225,14 @@ public class LevelGraphicDisplay extends Canvas
 
 	public void setCongratulationsFileName(String congratulationsFileName) {
 		this.congratulationsFileName.set(congratulationsFileName);
+	}
+
+	public String getWelcomeFileName() {
+		return welcomeFileName.get();
+	}
+
+	public void setWelcomeFileName(String welcomeFileName) {
+		this.welcomeFileName.set(welcomeFileName);
 	}
 
 

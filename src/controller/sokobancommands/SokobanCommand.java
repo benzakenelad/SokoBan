@@ -1,6 +1,5 @@
 package controller.sokobancommands;
 
-import controller.general.Command;
 import model.Model;
 import view.GUI.View;
 

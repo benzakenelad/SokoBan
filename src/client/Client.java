@@ -52,6 +52,7 @@ public class Client {
 		}
 		*/
 		
+		
 		// Streams close
 		serverInputStream.close();
 		serverOutputStream.close();
@@ -59,7 +60,7 @@ public class Client {
 		inFromServer.close();
 		outToServer.close();
 		theServer.close();
-		} catch (UnknownHostException e) {/*...*/}
-		catch (IOException e) {/*...*/}
+		} catch (UnknownHostException e) {}
+		catch (IOException e) {}
 	}
 }

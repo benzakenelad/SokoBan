@@ -17,7 +17,6 @@ public class LoadFromTextFile {
 		ArrayList<String> data = new ArrayList<String>();
 		String string = new String("");
 	
-		@SuppressWarnings("resource")
 		BufferedReader input = new BufferedReader(new InputStreamReader(new FileInputStream(fileName)));
 	    
 		while(string != null)

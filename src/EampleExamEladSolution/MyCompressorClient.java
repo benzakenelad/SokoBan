@@ -19,6 +19,7 @@ public class MyCompressorClient implements CompressorClient {
 		String[] uncomptemp = uncompressed.split("\n");
 		String compressed = new String("");
 		
+		
 		for(int i = 0; i < uncomptemp.length; i++)
 		{
 			compressed += compress1line(uncomptemp[i]);

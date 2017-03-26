@@ -8,12 +8,10 @@ import model.data.Move1Step;
 import model.data.SaveLevel;
 import model.policy.MySokobanPolicy;
 
+public class SokobanModel extends Observable implements Model {
 
-public class SokobanModel extends Observable implements Model  {
-	
 	private Level lvl = null;
 
-	
 	public Level getLvl() {
 		return lvl;
 	}
@@ -23,41 +21,22 @@ public class SokobanModel extends Observable implements Model  {
 	}
 
 	@Override
-	public void Move(String note) {
-		
-		
+	public void Move(String note) {	
 		try 
 		{
 			new Move1Step().Action(lvl, new MySokobanPolicy(), note); // depend what policy we want
-			if(lvl.levelCompletionCheck() == true)
-			{
-				this.lvl = null;
-				this.setChanged();
-				this.notifyObservers("display");
-				System.out.println("Congratulations, Level Completed");
-				
-			}
-			else
-			{
-				if(lvl != null)
-					lvl.setSteps(lvl.getSteps() + 1);
-				this.setChanged();
-				this.notifyObservers("display");
-			}		
-			
-		} catch (Exception e) 
-		{
-//			System.out.println(e.getMessage());
-		}
-
-		
+			if(lvl.isLevelFinishedFlag() == true)
+				System.out.println("Congratulations Level Completed!!");  
+			this.setChanged();
+			this.notifyObservers("display");
+	
+		} catch (Exception e) {}	
 	}
 
 	@Override
 	public void LoadLevel(String note) {
 		Level lvl = null;
-		try 
-		{
+		try {
 			lvl = new LoadLevel().Action(note);
 			this.lvl = lvl;
 			System.out.println(note + " Loaded Successfully");
@@ -70,14 +49,11 @@ public class SokobanModel extends Observable implements Model  {
 
 	@Override
 	public void SaveLevel(String note) {
-		try 
-		{
+		try {
 			new SaveLevel().Action(lvl, note);
-		} catch (Exception e) 
-		{
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
-		}		
+		}
 	}
-	
 
 }

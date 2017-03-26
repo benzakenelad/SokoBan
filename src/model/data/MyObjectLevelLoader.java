@@ -7,11 +7,11 @@ public class MyObjectLevelLoader implements LevelLoader {
 
 	@Override
 	public Level loadLevel(InputStream in) throws Exception {
-		Level l = null;		
+		Level lvl = null;		
 		
 		ObjectInputStream input = new ObjectInputStream(in);
 		try {
-			l = (Level)input.readObject();
+			lvl = (Level)input.readObject();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -19,7 +19,7 @@ public class MyObjectLevelLoader implements LevelLoader {
 		input.close();
 		in.close();		
 		
-		return l;
+		return lvl;
 	}
 
 }

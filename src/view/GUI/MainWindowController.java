@@ -1,6 +1,8 @@
 package view.GUI;
 
 import java.io.File;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Observable;
 import java.util.ResourceBundle;
 import java.util.Timer;
@@ -34,9 +36,8 @@ public  class MainWindowController extends Observable implements View, Initializ
 	 
 	
 	//Data Members
-	private boolean resetTimerFlag = true; // reset the time flag
-	private int count = 0; // time count
-	private StringProperty counter; // timer string
+	private Double counter = new Double(0); // time count
+	private StringProperty countString; // timer string
 	Timer timerThread = null; // timer
 	MediaPlayer mediaPlayer = null; // media player
 	
@@ -44,9 +45,12 @@ public  class MainWindowController extends Observable implements View, Initializ
 	// Methods
 	@Override
 	public void Display(Level lvl) {
-		if(lvl == null)
+		if(lvl.isLevelFinishedFlag() == true)
 		{
+			lvl.setFinishTime(counter.doubleValue());
+			timerThread.cancel();
 			levelGraphicDisplay.finishDraw();
+			// Here we need to open a window that ask the user if he want to save his score... mile stone 3 
 			return;
 		}
 		
@@ -56,15 +60,11 @@ public  class MainWindowController extends Observable implements View, Initializ
 			levelGraphicDisplay.setMaxWidth(lvl.getLevelWidth());
 		} catch (Exception e) {	e.printStackTrace();}
 		
+		
 		levelGraphicDisplay.setLevelData(lvl.getLevelByArrayListOfStrings()); // set the new level details
 		
 		this.setStepsText("Steps: " + Integer.toString(lvl.getSteps()));
 		
-		if(resetTimerFlag == true)
-		{
-			this.resetTimer();
-			resetTimerFlag = false;
-		}
 	}
 
 	@Override
@@ -78,17 +78,9 @@ public  class MainWindowController extends Observable implements View, Initializ
 		levelGraphicDisplay.welcomeDraw();
 		
 		// time initialize
-		counter = new SimpleStringProperty();
-		
-		timerThread = new Timer();
-		timerThread.scheduleAtFixedRate(new TimerTask() {
-				
-			@Override
-			public void run() {
-				counter.set("Timer: "+(count++));
-			}
-		}, 0, 1000);
-	
+		countString = new SimpleStringProperty("Timer : 0");
+		timer.textProperty().bind(countString);
+		timer.setVisible(true);
 		
 		//key function initialization
 		levelGraphicDisplay.addEventFilter(MouseEvent.MOUSE_CLICKED, (e)->levelGraphicDisplay.requestFocus());
@@ -116,6 +108,11 @@ public  class MainWindowController extends Observable implements View, Initializ
 				case ESCAPE:
 					close();
 					break;
+				case O: 
+					openFile();
+					break;
+				case S:
+					saveFile();
 				default:
 					break;
 				}
@@ -126,10 +123,20 @@ public  class MainWindowController extends Observable implements View, Initializ
 	
 	public void resetTimer() // reset the game timer
 	{
-		count=0;
-		try { Thread.sleep(500); } catch (InterruptedException e) { e.printStackTrace();}
-		timer.textProperty().bind(counter);
-		timer.setVisible(true);
+		counter = 0.0;
+		timerThread = new Timer();
+		timerThread.scheduleAtFixedRate(new TimerTask() {
+				
+			@Override
+			public void run() {
+				counter += 0.1;
+				
+				counter = BigDecimal.valueOf(counter).setScale(3, RoundingMode.HALF_UP).doubleValue();
+				
+				countString.set("Timer: " + counter);
+			}
+		}, 0, 100);
+		
 	}
 	
 	private void startMusic() // start the background music
@@ -163,8 +170,8 @@ public  class MainWindowController extends Observable implements View, Initializ
 		File chosen = fc.showOpenDialog(null);
 		if(chosen != null)
 		{
-			System.out.println(chosen.getPath());
-			resetTimerFlag = true;
+			System.out.println(chosen.getPath()); // print the path
+			resetTimer();
 			setChanged();
 			notifyObservers("load Levels/" + chosen.getName());
 		}
@@ -179,7 +186,8 @@ public  class MainWindowController extends Observable implements View, Initializ
 	public void safeExit(int value)
 	{
 		mediaPlayer.stop();
-		timerThread.cancel();
+		if(timerThread != null)
+			timerThread.cancel();
 		Platform.exit();
 	}
 	

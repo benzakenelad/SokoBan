@@ -8,8 +8,8 @@ public class MyXMLLevelLoader implements LevelLoader {
 
 	@Override
 	public Level loadLevel(InputStream in) throws Exception {
-		BufferedInputStream bos = new BufferedInputStream(in);
-		XMLDecoder input = new XMLDecoder(bos);
+		BufferedInputStream bis = new BufferedInputStream(in);
+		XMLDecoder input = new XMLDecoder(bis);
 		
 		Level lvl = (Level) input.readObject();
 		

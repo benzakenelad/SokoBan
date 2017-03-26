@@ -10,31 +10,14 @@ import model.data.Target;
 public class MySokobanPolicy extends Policy {
 
 	public void check(Level lvl, Direction dir) throws Exception 
-	{ 
-		///////   Movable check ////////
-		try
-		{
-		MySokoBanCharPolicy policy = new MySokoBanCharPolicy();
-		if(policy.moveIsLegal(lvl.getLevelByChar2DArray(), dir) == true)
-			System.out.println("Can move");
-		else
-			System.out.println("Can not move");
-		}catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		
-		
-		
-		
-		
-		
+	{ 		
 		Character player = lvl.getCC();
 		Position sourcePos = new Position(player.getPos());
 		boolean playerWasOnTarget = player.isOnTarget();
 		
 		if(moveThePlayerIfHeCan(lvl, dir) == true) // the player moved (here we clear the slot that the player was on)
 		{
+			lvl.setSteps(lvl.getSteps() + 1); // add 1 step
 			if(playerWasOnTarget == true) // in case the player was on target
 			{
 				Target t = (Target)lvl.getGameObjectByPosition(sourcePos);
@@ -47,6 +30,11 @@ public class MySokobanPolicy extends Policy {
 				player.setOnTarget(true);
 			else
 				player.setOnTarget(false);
+			
+			if(lvl.levelCompletionCheck() == true) // level completion check
+				lvl.setLevelFinishedFlag(true);
+			else
+				lvl.setLevelFinishedFlag(false);
 		}
 		else
 			throw new Exception("Player did not move.");

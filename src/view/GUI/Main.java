@@ -15,22 +15,43 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			// Main Window Loading
+			FXMLLoader mainWindowloader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
+			BorderPane mainWindowroot = (BorderPane)mainWindowloader.load();
 			
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
-			BorderPane root = (BorderPane)loader.load();
+			// Records Table Window Loading
+			FXMLLoader recordsTableWindowloader = new FXMLLoader(getClass().getResource("RecordsTableWindow.fxml"));
+			BorderPane recordsTableWindowroot = (BorderPane)recordsTableWindowloader.load();
+
+
+			// Controllers catching
+			MainWindowController view = (MainWindowController)mainWindowloader.getController();
+			RecordsTableWindowController recordsTableWindowController = (RecordsTableWindowController)recordsTableWindowloader.getController();
 			
-			MainWindowController view = (MainWindowController)loader.getController();
+			
+			// Connections initialization
 			SokobanModel model = new SokobanModel();
 			SokobanController controller = new SokobanController(model, view, getNote());
 			view.addObserver(controller);
 			model.addObserver(controller);
+			view.setRecordsTableWindowController(recordsTableWindowController);
+
+
+			// Main Window
+			Scene mainWindowScene = new Scene(mainWindowroot); // Scene scene = new Scene(root,900,800); 
+			mainWindowScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			primaryStage.setScene(mainWindowScene);
+			primaryStage.show();
 
 			
-			Scene scene = new Scene(root,900,800);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			primaryStage.setScene(scene);
-			primaryStage.show();
+			// Record Table Window
+			Stage recordsTableWindowStage = new Stage();
 			
+			Scene recordsTableWindowScene = new Scene(recordsTableWindowroot); // Scene scene = new Scene(root,900,800); 
+			recordsTableWindowScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			recordsTableWindowStage.setScene(recordsTableWindowScene);
+			
+			recordsTableWindowController.setRecordsTableStage(recordsTableWindowStage);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

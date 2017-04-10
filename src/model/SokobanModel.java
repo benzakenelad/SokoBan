@@ -25,8 +25,6 @@ public class SokobanModel extends Observable implements Model {
 		try 
 		{
 			new Move1Step().Action(lvl, new MySokobanPolicy(), note); // depend what policy we want
-			if(lvl.isLevelFinishedFlag() == true)
-				System.out.println("Congratulations Level Completed!!");  
 			this.setChanged();
 			this.notifyObservers("display");
 	

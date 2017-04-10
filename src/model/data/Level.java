@@ -11,7 +11,8 @@ public class Level implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	// data members
-	private int ID = 0; // level's ID
+	private String ID; // level's ID
+	private String levelName; // levelName
 	private GameObject[][] levelData = null; // store all game objects
 	private String levelTitle = ""; // the level title
 	private Character CC = null; // the level's character
@@ -29,12 +30,14 @@ public class Level implements Serializable{
 	private boolean levelFinishedFlag = false; 
 	
 	//c'tor
-	public Level() {}
+	public Level() {
+		ID = new String("Level 6");
+	}
 	
 	
 	// getters & setters
 	
-	public int getID() {
+	public String getID() {
 		return ID;
 	}
 	public String getLevelTitle() {
@@ -126,6 +129,12 @@ public class Level implements Serializable{
 	}
 	public void setFinishTime(double finishTime) {
 		this.finishTime = finishTime;
+	}
+	public String getLevelName() {
+		return levelName;
+	}
+	public void setLevelName(String levelName) {
+		this.levelName = levelName;
 	}
 	
 	// methods

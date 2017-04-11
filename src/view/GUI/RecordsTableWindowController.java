@@ -48,19 +48,22 @@ public class RecordsTableWindowController implements Initializable {
 	@FXML
 	TextField levelFilterField;
 
-	private ObservableList<Record> data;
-	private SessionFactory factory;
-	private Stage recordsTableStage;
+	private ObservableList<Record> data; // Record List Data
+	private SessionFactory factory; // Session factory
+	private Stage recordsTableStage; // Current stage holder
 
 	// Initialization
 	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
+		// Data members Initialization
 		data = FXCollections.observableArrayList();
 		factory = new Configuration().configure().buildSessionFactory();
 		recordsTable.setEditable(true);
 
+		
+		// Record table columns Initialization
 		TableColumn<Record, String> column1 = new TableColumn<>("Level");
 		column1.setCellValueFactory(new PropertyValueFactory<>("levelID"));
 		column1.setMinWidth(100);
@@ -97,10 +100,13 @@ public class RecordsTableWindowController implements Initializable {
 			}
 		});
 
+		// Columns set up
 		recordsTable.getColumns().addAll(column1, column2, column3, column4);
 
+		// Data set up
 		recordsTable.setItems(data);
 
+		// Mouse click event handler
 		recordsTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent arg0) {
@@ -112,6 +118,7 @@ public class RecordsTableWindowController implements Initializable {
 
 	}
 
+	// Full Name filter table 
 	public void updateNameFilteredData(String name) {
 		Session session = factory.openSession();
 		@SuppressWarnings("unchecked")
@@ -131,31 +138,35 @@ public class RecordsTableWindowController implements Initializable {
 		session.close();
 	}
 
+	// Level ID filter table 
 	public void updateLevelFilteredData(String levelID) {
 		Session session = factory.openSession();
+		
 		@SuppressWarnings("unchecked")
 		Query<Record> query = session.createQuery("from Record");
 		List<Record> list = query.list();
+		
 		int len = list.size();
 		int i = 0;
-		if (levelID.equals("") == true) {
-			updateNameFilteredData("");
-			return;
-		}
+
 		while (i < len) {
-			if (list.get(i).getLevelID().equals(levelID) == false) {
+			if (list.get(i).getLevelID().toLowerCase().startsWith(levelID.toLowerCase()) == false) 
+			{
 				list.remove(i);
 				len--;
 			} else
 				i++;
 		}
+		// New data set up
 		data.clear();
 		data.addAll(list);
 		session.close();
 	}
 
+	// new Record addition
 	public void addArecord(String levelID, int steps, double time) {
-		Platform.runLater(new Runnable() {
+		// 
+		Platform.runLater(new Runnable() { 
 
 			@Override
 			public void run() {
@@ -163,13 +174,17 @@ public class RecordsTableWindowController implements Initializable {
 				// Text Input Dialog creation
 				TextInputDialog dialog = new TextInputDialog("User Name");
 				dialog.setTitle("Registration");
-				dialog.setHeaderText("");
+				dialog.setHeaderText(null);
 				dialog.setContentText("Please enter your User Name");
 
 				// Traditional way to get the response value.
 				Optional<String> result = dialog.showAndWait();
-				String userName = result.get();
-
+				String userName = null;
+				if(result.isPresent())
+					userName = result.get();
+				else
+					return;		
+				
 				Session session = factory.openSession();
 				@SuppressWarnings("unchecked")
 				Query<User> query = session.createQuery("from User");
@@ -182,6 +197,7 @@ public class RecordsTableWindowController implements Initializable {
 						break;
 					}
 
+				// in case userName is not exist in record list 
 				if (user == null) {
 					// Create the custom dialog.
 					Dialog<Pair<String, String>> dialog2 = new Dialog<>();
@@ -211,7 +227,7 @@ public class RecordsTableWindowController implements Initializable {
 					dialog2.getDialogPane().setContent(grid);
 
 					// Convert the result to a FirstName-LastName-pair when the
-					// login button is clicked.
+					// Sign up button is clicked.
 					dialog2.setResultConverter(dialogButton -> {
 						if (dialogButton == loginButtonType) {
 							return new Pair<>(firstName.getText(), lastName.getText());
@@ -227,6 +243,8 @@ public class RecordsTableWindowController implements Initializable {
 					user = new User(userName);
 					user.setFirstName(pair.getKey());
 					user.setLastName(pair.getValue());
+					
+					// Saving the new user in record list
 					session.save(user);
 				}
 
@@ -234,11 +252,13 @@ public class RecordsTableWindowController implements Initializable {
 
 				Transaction tx = session.beginTransaction();
 
+				// Save the new record in record list
 				session.save(newRecord);
 				tx.commit();
 
 				session.close();
 
+				// Confirmation message
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("Confirmation");
 				alert.setHeaderText(null);
@@ -249,6 +269,7 @@ public class RecordsTableWindowController implements Initializable {
 
 	}
 
+	// Load the updated record list
 	public void displayRecordsTable() {
 		data.clear();
 		recordsTableStage.show();

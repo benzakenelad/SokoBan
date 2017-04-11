@@ -81,11 +81,10 @@ public class SokobanServer implements Server {
 
 	}
 	
-	@SuppressWarnings("deprecation")
+	// was deprecated
 	@Override
 	public void stopServer() {
 		stop = true;
-		serverThread.stop();
 	}
 
 }

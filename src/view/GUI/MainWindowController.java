@@ -207,9 +207,9 @@ public class MainWindowController extends Observable implements View, Initializa
 			public void run() {
 				
 				Alert alert = new Alert(AlertType.CONFIRMATION);
-				alert.setTitle("Confirmation");
-				alert.setHeaderText("List Of Records");
-				alert.setContentText("Would you like to enroll?");
+				alert.setTitle("Record List");
+				alert.setHeaderText(null);
+				alert.setContentText("Would you like to enroll the recrod list?");
 
 				Optional<ButtonType> result = alert.showAndWait();
 				if (result.get() == ButtonType.OK) {

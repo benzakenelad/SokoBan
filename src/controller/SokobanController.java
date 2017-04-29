@@ -68,7 +68,7 @@ public class SokobanController implements Observer {
 		Command command = this.generateACommand(note);
 		
 		controller.insertCommand(command);	
-	}
+	}	
 
 	public void exit() // stop the blocking queue thread & stop the running server thread
 	{

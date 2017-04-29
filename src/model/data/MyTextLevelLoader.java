@@ -75,7 +75,7 @@ public class MyTextLevelLoader implements LevelLoader {
 		return lvl;
 	}
 	
-	public void levelDataFill(Level lvl, ArrayList<String> arr)
+	private void levelDataFill(Level lvl, ArrayList<String> arr)
 	{
 		int levelWidth = -1;
 		int levelHeight = 0;

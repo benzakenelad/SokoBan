@@ -4,9 +4,9 @@ import java.util.Observable;
 
 import model.data.Level;
 import model.data.LoadLevel;
-import model.data.Move1Step;
+import model.data.Move;
 import model.data.SaveLevel;
-import model.policy.MySokobanPolicy;
+import model.policy.Policy;
 
 public class SokobanModel extends Observable implements Model {
 
@@ -21,10 +21,10 @@ public class SokobanModel extends Observable implements Model {
 	}
 
 	@Override
-	public void Move(String note) {	
+	public void Move(Move move, Policy policy, String note) {	
 		try 
 		{
-			new Move1Step().Action(lvl, new MySokobanPolicy(), note); // depend what policy we want
+			move.Action(lvl, policy, note);
 			this.setChanged();
 			this.notifyObservers("display");
 	

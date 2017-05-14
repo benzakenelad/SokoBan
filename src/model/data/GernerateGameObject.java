@@ -1,6 +1,7 @@
 package model.data;
 
 public class GernerateGameObject {
+	
 	public GameObject GenerateObject(char c) throws Exception // Generate a new game object from char
 	{
 		switch(c){
@@ -15,9 +16,6 @@ public class GernerateGameObject {
 		case ' ':
 			return null;
 		default: return null;
-		}
-
-		
-		
+		}	
 	}
 }

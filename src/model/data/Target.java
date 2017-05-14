@@ -12,8 +12,8 @@ public class Target extends GameObject implements Serializable{
 	
 	// data members
 	private GameObject onMe = null;
-	private boolean flag = false;
-	private boolean finishMoveFlag = false;
+	private boolean onMeflag = false;
+	private boolean boxOnMeFlag = false;
 
 	
 	// getters and setters
@@ -27,39 +27,39 @@ public class Target extends GameObject implements Serializable{
 		
 		if(onMe != null)
 		{
-			setFlag(true);
+			setOnMeFlag(true);
 			if(onMe.toString() == "@")
-				setFinishMoveFlag(true);
+				setBoxOnMeFlag(true);
 			else
-				setFinishMoveFlag(false);
+				setBoxOnMeFlag(false);
 		}else
 		{
-			setFinishMoveFlag(false);
-			setFlag(false);
+			setBoxOnMeFlag(false);
+			setOnMeFlag(false);
 		}
 	}
 	
-	public boolean isFlag() {
-		return flag;
+	public boolean gotGameObjectOnMe() {
+		return onMeflag;
 	}
 	
-	private void setFlag(boolean flag) {
-		this.flag = flag;
+	private void setOnMeFlag(boolean onMeflag) {
+		this.onMeflag = onMeflag;
 	}
 	
-	public boolean isFinishMoveFlag() {
-		return finishMoveFlag;
+	public boolean gotBoxOnMe() {
+		return boxOnMeFlag;
 	}
 
-	private void setFinishMoveFlag(boolean finishMoveFlag) {
-		this.finishMoveFlag = finishMoveFlag;
+	private void setBoxOnMeFlag(boolean boxOnMeFlag) {
+		this.boxOnMeFlag = boxOnMeFlag;
 	}
 	
 	// methods
 	@Override
 	public String toString() 
 	{
-		if(this.flag == true)
+		if(this.onMeflag == true)
 		{
 			if(this.getOnMe().toString().compareTo("A") == 0)
 				return "B";
@@ -74,7 +74,4 @@ public class Target extends GameObject implements Serializable{
 	{
 		return "o";
 	}
-
-
-
 }

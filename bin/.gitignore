@@ -1,9 +1,5 @@
-/ORM/
-/client/
-/controller/
 /model/
-/view/
 /searchLib/
-/mazeExample/
-/searchers/
-/stripsLib/
+/view/
+/controller/
+/ORM/

@@ -12,28 +12,26 @@ public class Level implements Serializable{
 	
 	// data members
 	private String ID; // level's ID
-	private String levelName; // levelName
+	private String levelName = null; // levelName
 	private GameObject[][] levelData = null; // store all game objects
 	private String levelTitle = ""; // the level title
-	private Character CC = null; // the level's character
+	private Character player = null; // the level's character
+	private ArrayList<Target> targetsArray = new ArrayList<Target> (); // targets holder (faster level completion check)
 	private int levelNumber = 0; // level number
-	private int levelWidth = 0; // the level max Width
-	private int levelHeight = 0; // the level height (number of lines)
+	private int levelMaxWidth = 0; // the level max Width
+	private int levelMaxHeight = 0; // the level height (number of lines)
 	private int boxCount = 0; // box counter
 	private int targetCount = 0; // target counter
 	private int wallCount = 0; // wall counter
 	private int emptyCellCount = 0; // empty cells counter
 	private int score = 0; // score
 	private int numOfBoxesOnTargets = 0; // number of boxes on targets
-	private int Steps = 0; // player steps counter
+	private int steps = 0; // player steps counter
 	private double finishTime = 0; // finish time
 	private boolean levelFinishedFlag = false; 
 	
 	//c'tor
-	public Level() {
-		ID = new String("Level 6");
-	}
-	
+	public Level() {ID = "Level 6";}
 	
 	// getters & setters
 	
@@ -52,17 +50,17 @@ public class Level implements Serializable{
 	public void setLevelNumber(int levelNumber) {
 		this.levelNumber = levelNumber;
 	}
-	public int getLevelWidth() {
-		return levelWidth;
+	public int getLevelMaxWidth() {
+		return levelMaxWidth;
 	}
-	public void setLevelWidth(int levelWidth) {
-		this.levelWidth = levelWidth;
+	public void setLevelMaxWidth(int levelMaxWidth) {
+		this.levelMaxWidth = levelMaxWidth;
 	}
-	public int getLevelHeight() {
-		return levelHeight;
+	public int getLevelMaxHeight() {
+		return levelMaxHeight;
 	}
-	public void setLevelHeight(int levelHeight) {
-		this.levelHeight = levelHeight;
+	public void setLevelMaxHeight(int levelMaxHeight) {
+		this.levelMaxHeight = levelMaxHeight;
 	}
 	public int getBoxCount() {
 		return boxCount;
@@ -100,11 +98,11 @@ public class Level implements Serializable{
 	public void setLevelData(GameObject[][] levelData) {
 		this.levelData = levelData;
 	}
-	public Character getCC() {
-		return CC;
+	public Character getPlayer() {
+		return player;
 	}
-	public void setCC(Character cC) {
-		CC = cC;
+	public void setPlayer(Character player) {
+		this.player = player;
 	}
 	public int getNumOfBoxesOnTargets() {
 		return numOfBoxesOnTargets;
@@ -113,10 +111,10 @@ public class Level implements Serializable{
 		this.numOfBoxesOnTargets = numOfBoxesOnTargets;
 	}
 	public int getSteps() {
-		return Steps;
+		return steps;
 	}
 	public void setSteps(int steps) {
-		Steps = steps;
+		this.steps = steps;
 	}
 	public boolean isLevelFinishedFlag() {
 		return levelFinishedFlag;
@@ -135,95 +133,104 @@ public class Level implements Serializable{
 	}
 	public void setLevelName(String levelName) {
 		this.levelName = levelName;
+	}	
+	public ArrayList<Target> getTargetsArray() {
+		return targetsArray;
+	}
+	public void sesTargetsArray(ArrayList<Target> targetsArray) {
+		this.targetsArray = targetsArray;
 	}
 	
 	// methods
 	
 	public GameObject getGameObjectByPosition(Position p) throws Exception // return an object by his position
 	{
-		if(p == null)
-			throw new Exception("Null position.");
-		int x = p.getX();
-		int y = p.getY();
-		return levelData[x][y];
+		if(p != null){
+			int x = p.getX();
+			int y = p.getY();
+			return levelData[x][y];
+		}	
+		return null;
 	}
-	public void moveObjectToPosition(GameObject go, Position dest) throws Exception // move an object to a new position
+	public void moveObjectToPosition(GameObject gameObj, Position dest) throws Exception // move an object to a new position
 	{
-		if(go == null)
+		if(gameObj == null)
 			throw new Exception("Null game object.");
 		if(dest == null)
 			throw new Exception("Null position.");
 		
 		int x = dest.getX();
 		int y = dest.getY();
+		
 		if(levelData[x][y] != null) // there is an object on this position
 			throw new Exception("Exception : Try to move an object on an excisting object.");
+		
 			
-		go.setPos(new Position(x,y));
-		levelData[x][y] = go;	
+		gameObj.setPos(new Position(x,y));
+		levelData[x][y] = gameObj;	
 	}
 	public void makeSlotNullByPosition(Position p) // make the Position arrayData slot null
 	{
-		int x = p.getX(), y = p.getY();
-		levelData[x][y] = null;
-	}
-	public boolean levelCompletionCheck() // check's if the level completed successfully
-	{
-		int height = 0, width = 0;
-		height = this.getLevelHeight();
-		for(int i = 0; i < height; i++)
-		{
-			width = levelData[i].length;
-			for(int j = 0; j < width; j++)
-			{
-				if(levelData[i][j] != null)
-				{
-					if(levelData[i][j].toStringXRay() == "o")
-					{
-						Target t = (Target) levelData[i][j];
-						if(t.isFinishMoveFlag() == false)
-							return false;
-					}
-				}
-			}
+		if(p != null){			
+			int x = p.getX(), y = p.getY();
+			levelData[x][y] = null;
 		}
+	}
+	public void levelCompletionCheck() // check's if the level completed successfully
+	{
+		for(Target target: targetsArray)
+			if(target.gotBoxOnMe() == false)
+			{
+				levelFinishedFlag = false;
+				return;
+			}
 		levelFinishedFlag =  true;
-		return true;
 	}
 	public ArrayList<String> getLevelByArrayListOfStrings() // returns an ArrayList<String> object of the level data by the convention (box = @, wall = #, character = A, target = o)
 	{
 		ArrayList<String> levelDataTXT = new ArrayList<String>();	
-		String s = new String("");
+		StringBuilder sb = new StringBuilder("");
 		
-		for(int i = 0; i < levelHeight; i++)
+		for(int i = 0; i < levelMaxHeight; i++)
 		{
 			int length = levelData[i].length;
 			for(int j = 0; j < length; j++)
 			{
 				if(levelData[i][j] != null)
-					s += levelData[i][j].toString();
+					sb.append(levelData[i][j].toString());
 				else
-					s += " ";
+					sb.append(" ");
 			}
-			levelDataTXT.add(new String(s));
-			s = "";
+			levelDataTXT.add(new String(sb.toString()));
+			sb.setLength(0);
 		}
 		return levelDataTXT;
 	}
+
+	public void movePlayerOnTarget(Character player, Target t) throws Exception // move the player on the target
+	{
+		if(t.gotGameObjectOnMe() == false)
+		{  
+			t.setOnMe(player);
+		    player.setPos(new Position(t.getPos()));
+		}
+	}
+	
+	/*
 	public char[][] getLevelByChar2DArray()
 	{
-		char[][] data = new char[this.levelHeight][];
-		for(int i = 0; i < this.levelHeight; i++)
-			data[i] = new char[this.levelWidth];
+		char[][] data = new char[this.levelMaxHeight][];
+		for(int i = 0; i < this.levelMaxHeight; i++)
+			data[i] = new char[this.levelMaxWidth];
 
 		ArrayList<String> leveldata = getLevelByArrayListOfStrings();
 		
-		for(int i = 0; i < this.levelHeight; i++)
-			for(int j = 0; j < this.levelWidth; j++)
+		for(int i = 0; i < this.levelMaxHeight; i++)
+			for(int j = 0; j < this.levelMaxWidth; j++)
 				data[i][j] = leveldata.get(i).charAt(j);
 			
 
 		return data;
 	}
-	
+	*/
 }

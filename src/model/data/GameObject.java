@@ -8,6 +8,8 @@ public class GameObject implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	
 	// data members
 	private Position pos = null;
 
@@ -33,6 +35,7 @@ public class GameObject implements Serializable{
 	{
 		return "GameObject";
 	}
+	
 	public String toStringXRay() // see the actual object (if there is box on target toStringXRay will return "o")
 	{
 		return this.toString();

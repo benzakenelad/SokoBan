@@ -12,11 +12,12 @@ public class MyTextLevelLoader implements LevelLoader {
 		
 		ArrayList<String> levelDataTXT = new ArrayList<String>();
 		Level lvl = new Level();
-		String s = new String();
+
 		
 		BufferedReader input = new BufferedReader(new InputStreamReader(in));
 		
 		// read from text file to ArrayList<String>
+		String s = new String();
 		while(s != null)
 		{
 			s = input.readLine();
@@ -26,16 +27,15 @@ public class MyTextLevelLoader implements LevelLoader {
 		
 		
 		// Temporary objects declaration
-		Position p = new Position();
-		GameObject go;
+		GameObject go = null;
 		int height = levelDataTXT.size();
 		GameObject[][] levelData = new GameObject[height][];
 		GernerateGameObject cgo = new GernerateGameObject();
 		GameObject[] lineData = null;
-		char ch;
 		boolean flag = true;
 		
 		
+		ArrayList<Target> targetsArr = lvl.getTargetsArray();
 		// levelData objects building
 		for(int i = 0; i < height; i++)
 		{	
@@ -43,21 +43,21 @@ public class MyTextLevelLoader implements LevelLoader {
 			lineData = new GameObject[length];
 			for(int j = 0; j < length; j++)
 			{
-				p.setX(i);
-				p.setY(j);
-				ch = levelDataTXT.get(i).charAt(j);
-				go = cgo.GenerateObject(ch);			
-				
+				go = cgo.GenerateObject(levelDataTXT.get(i).charAt(j));			
+
 				if(go == null)
 					continue;
 				
-				go.setPos(new Position(p));
-				if(ch == 'A' && flag) // flag make sure we have only one character(player)
+				go.setPos(new Position(i,j));
+				if(go instanceof Character && flag) // flag make sure we have only one character(player)
 				{
-					lvl.setCC((Character)go);
+					lvl.setPlayer((Character)go);
 					flag = false;
 				}
+				
 				lineData[j] = go;
+				if(go instanceof Target)
+					targetsArr.add((Target) go);
 			}
 			levelData[i] = lineData;
 			lineData = null;
@@ -70,7 +70,6 @@ public class MyTextLevelLoader implements LevelLoader {
 		// level details set
 		lvl.setLevelData(levelData);
 		levelDataFill(lvl, levelDataTXT);
-		
 		
 		return lvl;
 	}
@@ -117,12 +116,13 @@ public class MyTextLevelLoader implements LevelLoader {
 		}
 
 		// level data setting
-		lvl.setLevelHeight(levelHeight);
-		lvl.setLevelWidth(levelWidth);
+		lvl.setLevelMaxHeight(levelHeight);
+		lvl.setLevelMaxWidth(levelWidth);
 		lvl.setEmptyCellCount(emptyCellCount);
 		lvl.setTargetCount(targetCount);
 		lvl.setWallCount(wallCount);
 		lvl.setBoxCount(boxCount);
 	
 	}
+	
 }

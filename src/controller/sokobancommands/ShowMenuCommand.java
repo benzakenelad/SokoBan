@@ -2,6 +2,7 @@ package controller.sokobancommands;
 
 public class ShowMenuCommand extends SokobanCommand {
 
+	// for Command line interface utilization
 	@Override
 	public void execute() {
 		System.out.println("Type 'menu' To see the menu.");

@@ -14,22 +14,24 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Record implements Serializable{
 	
+	// Data members
 	private Integer recordID;;
 	private User user;
 	private String levelID;
 	private Integer steps;
 	private Double time;
 	
-	public Record() {
-	}
-	
+	// c'tor
 	public Record(User user, String levelID, Integer steps, Double time) {
 		this.user = user;
 		this.levelID = levelID;
 		this.steps = steps;
 		this.time = time;
 	}
-
+	
+	public Record() {}
+	
+	// Getters and setters
 	@Id
 	@GeneratedValue
 	@Column(name = "RECORDID", nullable = false)

@@ -9,17 +9,12 @@ import model.data.SaveLevel;
 import model.policy.Policy;
 
 public class SokobanModel extends Observable implements Model {
-
+	
+	// Data members
 	private Level lvl = null;
 
-	public Level getLvl() {
-		return lvl;
-	}
 
-	public void setLvl(Level lvl) {
-		this.lvl = lvl;
-	}
-
+	// Methods implementation
 	@Override
 	public void Move(Move move, Policy policy, String note) {	
 		try 
@@ -28,7 +23,7 @@ public class SokobanModel extends Observable implements Model {
 			this.setChanged();
 			this.notifyObservers("display");
 	
-		} catch (Exception e) {}	
+		} catch (Exception e) {/*e.printStackTrace();*/}	
 	}
 
 	@Override
@@ -37,7 +32,6 @@ public class SokobanModel extends Observable implements Model {
 		try {
 			lvl = new LoadLevel().Action(note);
 			this.lvl = lvl;
-			System.out.println(note + " Loaded Successfully");
 			this.setChanged();
 			this.notifyObservers("display");
 		} catch (Exception e) {
@@ -52,6 +46,14 @@ public class SokobanModel extends Observable implements Model {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
+	}
+	
+	// getters and setters
+	public Level getLvl() {
+		return lvl;
+	}
+	public void setLvl(Level lvl) {
+		this.lvl = lvl;
 	}
 
 }

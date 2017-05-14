@@ -11,7 +11,7 @@ public class MySokobanPolicy extends Policy {
 
 	public void check(Level lvl, Direction dir) throws Exception 
 	{ 		
-		Character player = lvl.getCC();
+		Character player = lvl.getPlayer();
 		Position sourcePos = new Position(player.getPos());
 		boolean playerWasOnTarget = player.isOnTarget();
 		
@@ -31,10 +31,7 @@ public class MySokobanPolicy extends Policy {
 			else
 				player.setOnTarget(false);
 			
-			if(lvl.levelCompletionCheck() == true) // level completion check
-				lvl.setLevelFinishedFlag(true);
-			else
-				lvl.setLevelFinishedFlag(false);
+			lvl.levelCompletionCheck();
 		}
 		else
 			throw new Exception("Player did not move.");
@@ -43,7 +40,7 @@ public class MySokobanPolicy extends Policy {
 	
 	private boolean moveThePlayerIfHeCan(Level lvl, Direction dir) throws Exception
 	{
-		Character player = lvl.getCC();
+		Character player = lvl.getPlayer();
 		Position sourcePos = null, destPos = null, afterDestPos = null;
 		sourcePos = new Position(player.getPos());  // calculate the source position
 		destPos = PositionCalculator(sourcePos, dir); // Initialize the destination object
@@ -74,9 +71,9 @@ public class MySokobanPolicy extends Policy {
 		}else if(destObj.toStringXRay() == "o") // case there is a target ahead 
 		{
 			Target t = (Target)destObj;
-			if(t.isFlag() == false) // the target is empty so the player go on it
+			if(t.gotGameObjectOnMe() == false) // the target is empty so the player go on it
 			{
-				makePlayerOnTarget(player, t);
+				lvl.movePlayerOnTarget(player, t);
 				return true;
 			}
 			else // there is a box on the target
@@ -86,7 +83,7 @@ public class MySokobanPolicy extends Policy {
 					GameObject go = t.getOnMe();
 					lvl.moveObjectToPosition(go, afterDestPos);
 					t.setOnMe(null);
-					makePlayerOnTarget(player, t);
+					lvl.movePlayerOnTarget(player, t);
 					return true;
 					
 				}else if(afterDestObj.toString() == "o") // if we are here the nextStepObj is an empty target
@@ -96,7 +93,7 @@ public class MySokobanPolicy extends Policy {
 					go.setPos(new Position(t2.getPos()));
 					t2.setOnMe(go);
 					t.setOnMe(null);
-					makePlayerOnTarget(player, t);
+					lvl.movePlayerOnTarget(player, t);
 					return true;
 				}
 			}
@@ -123,12 +120,4 @@ public class MySokobanPolicy extends Policy {
 		throw new Exception("unrecognized move (in MySokobanPolicy)");
 	}
 	
-	private void makePlayerOnTarget(Character player, Target t) throws Exception // move the player on the target
-	{
-		if(t.isFlag() == false)
-		{  
-			t.setOnMe(player);
-		    player.setPos(new Position(t.getPos()));
-		}
-	}
 }

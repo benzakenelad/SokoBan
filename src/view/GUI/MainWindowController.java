@@ -134,8 +134,8 @@ public class MainWindowController extends Observable implements View, Initializa
 		}
 
 		try {
-			levelGraphicDisplay.setMaxHeight(lvl.getLevelHeight());
-			levelGraphicDisplay.setMaxWidth(lvl.getLevelWidth());
+			levelGraphicDisplay.setMaxHeight(lvl.getLevelMaxHeight());
+			levelGraphicDisplay.setMaxWidth(lvl.getLevelMaxWidth());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -227,7 +227,7 @@ public class MainWindowController extends Observable implements View, Initializa
 		notifyObservers("exit");
 	}
 
-	public void safeExit(int value) {
+	public void safeExit() {
 		mediaPlayer.stop();
 		recordsTableWindowController.close();
 		if (timerThread != null)

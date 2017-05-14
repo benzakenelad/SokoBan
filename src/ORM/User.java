@@ -14,20 +14,22 @@ import javax.persistence.OneToMany;
 @Entity
 public class User implements Serializable {
 
+	// Data members
 	private String userName;
 	private String firstName;
 	private String lastName;
 	
 	private List<Record> recordList = new ArrayList<Record>();
 
-	public User() {
 
-	}
-
+	// c'tor
 	public User(String userName) {
 		this.userName = userName;
 	}
 	
+	public User() {}
+	
+	// Getters and setters
 	@Id
 	@Column(name = "USERNAME", nullable = false)
 	public String getUserName() {
@@ -65,23 +67,10 @@ public class User implements Serializable {
 		this.recordList = recordList;
 	}
 
-/*	@Override
-	public String toString() {
-		String str = new String("User Details : [User Name = " + userName + ", First Name = " + firstName + ", Last Name = " + lastName + "]");
-		str += "\n     User Records:";
-		for(int i = 0; i < recordList.size(); i++)
-		{
-			str += "\n          ";
-			str += recordList.get(i).toString();
-		}
-		return str;                                        
-	}
-*/
 	@Override
 	public String toString() {
 	
 		return this.firstName + " " + this.lastName;
 	}
 	
-
 }

@@ -13,7 +13,6 @@ public class SafeExitCommand extends SokobanCommand {
 	public void execute() {
 		if(sokobanController != null)
 			sokobanController.exit();
-		System.out.println("Good Bye");
 	}
 
 }

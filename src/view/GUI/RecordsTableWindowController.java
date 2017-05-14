@@ -42,11 +42,11 @@ public class RecordsTableWindowController implements Initializable {
 
 	// Data Members
 	@FXML
-	TableView<Record> recordsTable;
+	private TableView<Record> recordsTable;
 	@FXML
-	TextField nameFilterField;
+	private TextField nameFilterField;
 	@FXML
-	TextField levelFilterField;
+	private TextField levelFilterField;
 
 	private ObservableList<Record> data; // Record List Data
 	private SessionFactory factory; // Session factory

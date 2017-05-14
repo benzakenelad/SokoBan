@@ -10,17 +10,17 @@ import java.util.Observable;
 public class SokobanClientHandler extends Observable implements ClientHandler{
 	
 	@Override
-	public void HandleClient(InputStream inFromClient, OutputStream outToClient) throws Exception // handle a client by a well defined protocal
+	public void HandleClient(InputStream inFromClient, OutputStream outToClient) throws Exception // handle a client by a well defined protocol
 	{
 
-		// Initialize streams
+		// Streams initialization
 		InputStreamReader InFromClient = new InputStreamReader(inFromClient);	
 		BufferedReader fromClient = new BufferedReader(InFromClient);
 		PrintWriter toClient = new PrintWriter(outToClient, true);
 		
 		// Data Declaration
 		String inputLine = null;
-		String outputLine = new String("");	
+		String outputLine = new String("Enter the next command please.");	
 		boolean stopPlay = false;
 		
 		// Sending terms to the client
@@ -31,7 +31,6 @@ public class SokobanClientHandler extends Observable implements ClientHandler{
 		// Protocol
 		while(stopPlay != true)
 		{
-			outputLine = "Enter the next command please.";
 			toClient.println(outputLine);
 			inputLine = fromClient.readLine();
 			if(inputLine.compareTo("stop") == 0 || inputLine.compareTo("exit") == 0)

@@ -35,6 +35,5 @@ public class Move1Step implements Move{
 			break;
 		default: throw new Exception("Illegal Move.");
 		}
-		
 	}
 }

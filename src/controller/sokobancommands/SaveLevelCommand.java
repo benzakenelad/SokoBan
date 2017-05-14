@@ -2,10 +2,8 @@ package controller.sokobancommands;
 
 public class SaveLevelCommand extends SokobanCommand{
 	
-	
-	
 	@Override
-	public void execute() {
+	public void execute() { // invoke the matching receiver
 		model.SaveLevel(order);
 	}
 

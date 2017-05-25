@@ -59,7 +59,6 @@ public class SokobanController implements Observer {
 		
 		if(arg1 instanceof String){
 			String s = (String)arg1;
-			System.out.println(s);
 			s = s.toLowerCase();
 			String note[] = s.split(" ");
 			Command command = this.generateACommand(note);

@@ -1,12 +1,16 @@
 package model;
 
+import java.io.FileNotFoundException;
+import java.util.List;
 import java.util.Observable;
 
 import model.data.Level;
-import model.data.LoadLevel;
 import model.data.Move;
-import model.data.SaveLevel;
+import model.levelLoaders.LoadLevel;
+import model.levelSavers.SaveLevel;
 import model.policy.Policy;
+import searchLib.Action;
+import solver.solveSokobanLevel;
 
 public class SokobanModel extends Observable implements Model {
 	
@@ -16,7 +20,7 @@ public class SokobanModel extends Observable implements Model {
 
 	// Methods implementation
 	@Override
-	public void Move(Move move, Policy policy, String note) {	
+	public void move(Move move, Policy policy, String note) {	
 		try 
 		{
 			move.Action(lvl, policy, note);
@@ -27,7 +31,7 @@ public class SokobanModel extends Observable implements Model {
 	}
 
 	@Override
-	public void LoadLevel(String note) {
+	public void loadLevel(String note) {
 		Level lvl = null;
 		try {
 			lvl = new LoadLevel().Action(note);
@@ -40,7 +44,7 @@ public class SokobanModel extends Observable implements Model {
 	}
 
 	@Override
-	public void SaveLevel(String note) {
+	public void saveLevel(String note) {
 		try {
 			new SaveLevel().Action(lvl, note);
 		} catch (Exception e) {
@@ -55,5 +59,40 @@ public class SokobanModel extends Observable implements Model {
 	public void setLvl(Level lvl) {
 		this.lvl = lvl;
 	}
+
+	@Override
+	public void solve() {
+		solveSokobanLevel solver = new solveSokobanLevel();
+		List<Action> actions;
+		try {
+			actions = solver.optimalSolve(this.lvl, 1000);
+			new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+					for(Action action: actions){
+						setChanged();
+						notifyObservers(action.getName());
+						try {
+							Thread.sleep(300);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					
+				}
+			}).start();
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		};
+		
+	}
+	
+	
 
 }

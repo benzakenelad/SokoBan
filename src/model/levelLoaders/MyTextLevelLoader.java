@@ -1,9 +1,17 @@
-package model.data;
+package model.levelLoaders;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+
+import model.data.GernerateGameObject;
+import model.data.Level;
+import model.data.gameObjects.Box;
+import model.data.gameObjects.Character;
+import model.data.gameObjects.GameObject;
+import model.data.gameObjects.Position;
+import model.data.gameObjects.Target;
 
 public class MyTextLevelLoader implements LevelLoader {
 
@@ -36,6 +44,7 @@ public class MyTextLevelLoader implements LevelLoader {
 		
 		
 		ArrayList<Target> targetsArr = lvl.getTargetsArray();
+		ArrayList<Box> boxesArr = lvl.getBoxesArray();
 		// levelData objects building
 		for(int i = 0; i < height; i++)
 		{	
@@ -58,6 +67,8 @@ public class MyTextLevelLoader implements LevelLoader {
 				lineData[j] = go;
 				if(go instanceof Target)
 					targetsArr.add((Target) go);
+				if(go instanceof Box)
+					boxesArr.add((Box) go);
 			}
 			levelData[i] = lineData;
 			lineData = null;

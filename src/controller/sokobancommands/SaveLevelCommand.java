@@ -4,7 +4,7 @@ public class SaveLevelCommand extends SokobanCommand{
 	
 	@Override
 	public void execute() { // invoke the matching receiver
-		model.SaveLevel(order);
+		model.saveLevel(order);
 	}
 
 }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.1.14" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
-  <class id="1" language="java" name="model.data.Character" project="SokoProject" 
-    file="/SokoProject/src/model/data/Character.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="1" language="java" name="model.data.gameObjects.Character" project="SokoProject" 
+    file="/SokoProject/src/model/data/gameObjects/Character.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="118" y="408"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -10,8 +10,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="model.data.GameObject" project="SokoProject" 
-    file="/SokoProject/src/model/data/GameObject.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="2" language="java" name="model.data.gameObjects.GameObject" project="SokoProject" 
+    file="/SokoProject/src/model/data/gameObjects/GameObject.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="265" y="142"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -19,8 +19,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="model.data.Wall" project="SokoProject" 
-    file="/SokoProject/src/model/data/Wall.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="3" language="java" name="model.data.gameObjects.Wall" project="SokoProject" 
+    file="/SokoProject/src/model/data/gameObjects/Wall.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="293" y="399"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -28,8 +28,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="model.data.Target" project="SokoProject" 
-    file="/SokoProject/src/model/data/Target.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="4" language="java" name="model.data.gameObjects.Target" project="SokoProject" 
+    file="/SokoProject/src/model/data/gameObjects/Target.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="679" y="358"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -37,8 +37,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="model.data.Box" project="SokoProject" file="/SokoProject/src/model/data/Box.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
+  <class id="5" language="java" name="model.data.gameObjects.Box" project="SokoProject" 
+    file="/SokoProject/src/model/data/gameObjects/Box.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="473" y="408"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -46,8 +46,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="model.data.MyTextLevelSaver" project="SokoProject" 
-    file="/SokoProject/src/model/data/MyTextLevelSaver.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="6" language="java" name="model.levelSavers.MyTextLevelSaver" project="SokoProject" 
+    file="/SokoProject/src/model/levelSavers/MyTextLevelSaver.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="919" y="254"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -55,8 +55,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <interface id="7" language="java" name="model.data.LevelSaver" project="SokoProject" 
-    file="/SokoProject/src/model/data/LevelSaver.java" binary="false" corner="BOTTOM_RIGHT">    
+  <interface id="7" language="java" name="model.levelSavers.LevelSaver" project="SokoProject" 
+    file="/SokoProject/src/model/levelSavers/LevelSaver.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1148" y="97"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -64,8 +64,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="8" language="java" name="model.data.MyObjectLevelSaver" project="SokoProject" 
-    file="/SokoProject/src/model/data/MyObjectLevelSaver.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="8" language="java" name="model.levelSavers.MyObjectLevelSaver" project="SokoProject" 
+    file="/SokoProject/src/model/levelSavers/MyObjectLevelSaver.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1147" y="256"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -73,8 +73,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="9" language="java" name="model.data.MyXMLLevelSaver" project="SokoProject" 
-    file="/SokoProject/src/model/data/MyXMLLevelSaver.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="9" language="java" name="model.levelSavers.MyXMLLevelSaver" project="SokoProject" 
+    file="/SokoProject/src/model/levelSavers/MyXMLLevelSaver.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1366" y="252"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -82,8 +82,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <interface id="10" language="java" name="model.data.LevelLoader" project="SokoProject" 
-    file="/SokoProject/src/model/data/LevelLoader.java" binary="false" corner="BOTTOM_RIGHT">    
+  <interface id="10" language="java" name="model.levelLoaders.LevelLoader" project="SokoProject" 
+    file="/SokoProject/src/model/levelLoaders/LevelLoader.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1150" y="399"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -91,8 +91,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="11" language="java" name="model.data.MyXMLLevelLoader" project="SokoProject" 
-    file="/SokoProject/src/model/data/MyXMLLevelLoader.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="11" language="java" name="model.levelLoaders.MyXMLLevelLoader" project="SokoProject" 
+    file="/SokoProject/src/model/levelLoaders/MyXMLLevelLoader.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="914" y="554"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -100,8 +100,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="12" language="java" name="model.data.MyTextLevelLoader" project="SokoProject" 
-    file="/SokoProject/src/model/data/MyTextLevelLoader.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="12" language="java" name="model.levelLoaders.MyTextLevelLoader" project="SokoProject" 
+    file="/SokoProject/src/model/levelLoaders/MyTextLevelLoader.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1179" y="563"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -109,8 +109,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="13" language="java" name="model.data.MyObjectLevelLoader" project="SokoProject" 
-    file="/SokoProject/src/model/data/MyObjectLevelLoader.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="13" language="java" name="model.levelLoaders.MyObjectLevelLoader" project="SokoProject" 
+    file="/SokoProject/src/model/levelLoaders/MyObjectLevelLoader.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1451" y="562"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -307,8 +307,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="35" language="java" name="model.data.SaveLevel" project="SokoProject" 
-    file="/SokoProject/src/model/data/SaveLevel.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="35" language="java" name="model.levelSavers.SaveLevel" project="SokoProject" 
+    file="/SokoProject/src/model/levelSavers/SaveLevel.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1567" y="98"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -316,8 +316,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="36" language="java" name="model.data.LoadLevel" project="SokoProject" 
-    file="/SokoProject/src/model/data/LoadLevel.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="36" language="java" name="model.levelLoaders.LoadLevel" project="SokoProject" 
+    file="/SokoProject/src/model/levelLoaders/LoadLevel.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1565" y="400"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -353,244 +353,236 @@
     </display>  
   </class>  
   <association id="40">    
-    <end type="SOURCE" refId="19" navigable="false">      
-      <attribute id="41" name="bqueue">        
-        <position height="0" width="0" x="24" y="350"/>      
-      </attribute>      
-      <multiplicity id="42" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="24" y="350"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="20" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="43">    
-    <end type="SOURCE" refId="14"/>    
-    <end type="TARGET" refId="15"/>  
-  </generalization>  
-  <association id="44">    
-    <end type="SOURCE" refId="18" navigable="false">      
-      <attribute id="45" name="controller">        
-        <position height="0" width="0" x="-37" y="304"/>      
-      </attribute>      
-      <multiplicity id="46" minimum="0" maximum="1">        
-        <position height="0" width="0" x="-37" y="304"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="19" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="47">    
-    <end type="SOURCE" refId="22"/>    
-    <end type="TARGET" refId="24"/>  
-  </generalization>  
-  <association id="48">    
     <end type="SOURCE" refId="24" navigable="false">      
-      <attribute id="49" name="view">        
+      <attribute id="41" name="view">        
         <position height="0" width="0" x="-108" y="256"/>      
       </attribute>      
-      <multiplicity id="50" minimum="0" maximum="1">        
+      <multiplicity id="42" minimum="0" maximum="1">        
         <position height="0" width="0" x="-108" y="256"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="28" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <realization id="51">    
+  <association id="43">    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="44" name="controller">        
+        <position height="0" width="0" x="-37" y="304"/>      
+      </attribute>      
+      <multiplicity id="45" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-37" y="304"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="46">    
+    <end type="SOURCE" refId="30"/>    
+    <end type="TARGET" refId="33"/>  
+  </generalization>  
+  <realization id="47">    
+    <end type="SOURCE" refId="32"/>    
+    <end type="TARGET" refId="31"/>  
+  </realization>  
+  <association id="48">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="49" name="onMe">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="50" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="51">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="15"/>  
+  </generalization>  
+  <association id="52">    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="53" name="bqueue">        
+        <position height="0" width="0" x="24" y="350"/>      
+      </attribute>      
+      <multiplicity id="54" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="24" y="350"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="20" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="55">    
     <end type="SOURCE" refId="9"/>    
     <end type="TARGET" refId="7"/>  
   </realization>  
-  <association id="52">    
+  <realization id="56">    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="16"/>  
+  </realization>  
+  <association id="57">    
     <end type="SOURCE" refId="35" navigable="false">      
-      <attribute id="53" name="hm">        
+      <attribute id="58" name="hm">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="54" minimum="0" maximum="2147483647">        
+      <multiplicity id="59" minimum="0" maximum="2147483647">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="7" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="55">    
-    <end type="SOURCE" refId="25"/>    
-    <end type="TARGET" refId="24"/>  
-  </generalization>  
-  <association id="56">    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="57" name="onMe">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="58" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="59">    
-    <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="2"/>  
-  </generalization>  
-  <generalization id="60">    
-    <end type="SOURCE" refId="26"/>    
-    <end type="TARGET" refId="24"/>  
-  </generalization>  
-  <realization id="61">    
-    <end type="SOURCE" refId="30"/>    
-    <end type="TARGET" refId="28"/>  
-  </realization>  
-  <association id="62">    
-    <end type="SOURCE" refId="36" navigable="false">      
-      <attribute id="63" name="hm">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="64" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="10" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="65">    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="2"/>  
-  </generalization>  
-  <association id="66">    
-    <end type="SOURCE" refId="24" navigable="false">      
-      <attribute id="67" name="model">        
-        <position height="0" width="0" x="27" y="330"/>      
-      </attribute>      
-      <multiplicity id="68" minimum="0" maximum="1">        
-        <position height="0" width="0" x="27" y="330"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="16" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="69">    
-    <end type="SOURCE" refId="21"/>    
-    <end type="TARGET" refId="24"/>  
-  </generalization>  
-  <realization id="70">    
-    <end type="SOURCE" refId="8"/>    
-    <end type="TARGET" refId="7"/>  
-  </realization>  
-  <realization id="71">    
-    <end type="SOURCE" refId="24"/>    
-    <end type="TARGET" refId="20"/>  
-  </realization>  
-  <realization id="72">    
-    <end type="SOURCE" refId="11"/>    
-    <end type="TARGET" refId="10"/>  
-  </realization>  
-  <generalization id="73">    
-    <end type="SOURCE" refId="27"/>    
-    <end type="TARGET" refId="24"/>  
-  </generalization>  
-  <generalization id="74">    
-    <end type="SOURCE" refId="39"/>    
-    <end type="TARGET" refId="33"/>  
-  </generalization>  
-  <association id="75">    
-    <end type="SOURCE" refId="37" navigable="false">      
-      <attribute id="76" name="levelData">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="77" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <realization id="78">    
-    <end type="SOURCE" refId="29"/>    
-    <end type="TARGET" refId="28"/>  
-  </realization>  
-  <realization id="79">    
-    <end type="SOURCE" refId="18"/>    
-    <end type="TARGET" refId="34"/>  
-  </realization>  
-  <realization id="80">    
-    <end type="SOURCE" refId="12"/>    
-    <end type="TARGET" refId="10"/>  
-  </realization>  
-  <realization id="81">    
-    <end type="SOURCE" refId="13"/>    
-    <end type="TARGET" refId="10"/>  
-  </realization>  
-  <realization id="82">    
+  <realization id="60">    
     <end type="SOURCE" refId="39"/>    
     <end type="TARGET" refId="38"/>  
   </realization>  
-  <generalization id="83">    
+  <realization id="61">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="10"/>  
+  </realization>  
+  <generalization id="62">    
+    <end type="SOURCE" refId="22"/>    
+    <end type="TARGET" refId="24"/>  
+  </generalization>  
+  <realization id="63">    
     <end type="SOURCE" refId="29"/>    
+    <end type="TARGET" refId="28"/>  
+  </realization>  
+  <realization id="64">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="10"/>  
+  </realization>  
+  <generalization id="65">    
+    <end type="SOURCE" refId="25"/>    
+    <end type="TARGET" refId="24"/>  
+  </generalization>  
+  <generalization id="66">    
+    <end type="SOURCE" refId="39"/>    
     <end type="TARGET" refId="33"/>  
   </generalization>  
-  <association id="84">    
-    <end type="SOURCE" refId="32" navigable="false">      
-      <attribute id="85" name="ch"/>      
-      <multiplicity id="86" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="38" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="87">    
+  <generalization id="67">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <generalization id="68">    
+    <end type="SOURCE" refId="21"/>    
+    <end type="TARGET" refId="24"/>  
+  </generalization>  
+  <generalization id="69">    
     <end type="SOURCE" refId="23"/>    
     <end type="TARGET" refId="24"/>  
   </generalization>  
-  <realization id="88">    
-    <end type="SOURCE" refId="32"/>    
-    <end type="TARGET" refId="31"/>  
-  </realization>  
-  <generalization id="89">    
-    <end type="SOURCE" refId="17"/>    
-    <end type="TARGET" refId="33"/>  
+  <generalization id="70">    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="24"/>  
   </generalization>  
-  <association id="90">    
-    <end type="SOURCE" refId="37" navigable="false">      
-      <attribute id="91" name="CC">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="92" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="1" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <realization id="93">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="7"/>  
+  <realization id="71">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="34"/>  
   </realization>  
-  <association id="94">    
+  <association id="72">    
     <end type="SOURCE" refId="18" navigable="false">      
-      <attribute id="95" name="server">        
+      <attribute id="73" name="server">        
         <position height="0" width="0" x="-108" y="132"/>      
       </attribute>      
-      <multiplicity id="96" minimum="0" maximum="1">        
+      <multiplicity id="74" minimum="0" maximum="1">        
         <position height="0" width="0" x="-108" y="132"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="31" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="97">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="2"/>  
-  </generalization>  
-  <realization id="98">    
-    <end type="SOURCE" refId="17"/>    
-    <end type="TARGET" refId="16"/>  
+  <realization id="75">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="7"/>  
   </realization>  
-  <generalization id="99">    
+  <association id="76">    
+    <end type="SOURCE" refId="24" navigable="false">      
+      <attribute id="77" name="model">        
+        <position height="0" width="0" x="27" y="330"/>      
+      </attribute>      
+      <multiplicity id="78" minimum="0" maximum="1">        
+        <position height="0" width="0" x="27" y="330"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="79">    
     <end type="SOURCE" refId="4"/>    
     <end type="TARGET" refId="2"/>  
   </generalization>  
-  <generalization id="100">    
+  <realization id="80">    
     <end type="SOURCE" refId="30"/>    
+    <end type="TARGET" refId="28"/>  
+  </realization>  
+  <realization id="81">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="10"/>  
+  </realization>  
+  <association id="82">    
+    <end type="SOURCE" refId="32" navigable="false">      
+      <attribute id="83" name="ch">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="84" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="38" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="85">    
+    <end type="SOURCE" refId="24"/>    
+    <end type="TARGET" refId="20"/>  
+  </realization>  
+  <generalization id="86">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <realization id="87">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="7"/>  
+  </realization>  
+  <generalization id="88">    
+    <end type="SOURCE" refId="29"/>    
     <end type="TARGET" refId="33"/>  
+  </generalization>  
+  <association id="89">    
+    <end type="SOURCE" refId="37" navigable="false">      
+      <attribute id="90" name="levelData">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="91" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="92">    
+    <end type="SOURCE" refId="36" navigable="false">      
+      <attribute id="93" name="hm">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="94" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="95">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <generalization id="96">    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="33"/>  
+  </generalization>  
+  <generalization id="97">    
+    <end type="SOURCE" refId="26"/>    
+    <end type="TARGET" refId="24"/>  
   </generalization>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    

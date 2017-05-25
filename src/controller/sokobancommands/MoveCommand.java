@@ -6,6 +6,6 @@ import model.policy.MySokobanPolicy;
 public class MoveCommand extends SokobanCommand {
 	
 	public void execute() { // Invoke the matching movement (by the specified policy) receiver
-		model.Move(new Move1Step(), new MySokobanPolicy(), order);
+		model.move(new Move1Step(), new MySokobanPolicy(), order);
 	}
 }

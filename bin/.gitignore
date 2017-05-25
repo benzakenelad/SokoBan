@@ -1,5 +1,5 @@
-/model/
-/searchLib/
-/view/
 /controller/
+/model/
+/view/
 /ORM/
+/hibernate.cfg.xml

@@ -1,7 +1,9 @@
-package model.data;
+package model.levelLoaders;
 
 import java.io.InputStream;
 import java.io.ObjectInputStream;
+
+import model.data.Level;
 
 public class MyObjectLevelLoader implements LevelLoader {
 

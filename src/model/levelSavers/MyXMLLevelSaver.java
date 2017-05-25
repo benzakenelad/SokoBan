@@ -1,8 +1,10 @@
-package model.data;
+package model.levelSavers;
 
 import java.beans.XMLEncoder;
 import java.io.BufferedOutputStream;
 import java.io.OutputStream;
+
+import model.data.Level;
 
 public class MyXMLLevelSaver implements LevelSaver {
 

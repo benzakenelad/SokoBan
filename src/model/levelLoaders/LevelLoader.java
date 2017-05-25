@@ -1,6 +1,8 @@
-package model.data;
+package model.levelLoaders;
 
 import java.io.InputStream;
+
+import model.data.Level;
 
 /**
  <h3>javadoc LevelLoader:</h3>

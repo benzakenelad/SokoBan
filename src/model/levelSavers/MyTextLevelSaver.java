@@ -1,8 +1,10 @@
-package model.data;
+package model.levelSavers;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+
+import model.data.Level;
 
 public class MyTextLevelSaver implements LevelSaver {
 

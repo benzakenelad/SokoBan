@@ -1,7 +1,9 @@
-package model.data;
+package model.levelSavers;
 
 import java.io.FileOutputStream;
 import java.util.HashMap;
+
+import model.data.Level;
 
 public class SaveLevel {
 	private HashMap<String, LevelSaver> hm = new HashMap<String, LevelSaver>();

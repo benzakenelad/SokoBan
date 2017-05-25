@@ -1,11 +1,14 @@
 package model.policy;
 
-import model.data.Character;
+
 import model.data.Direction;
-import model.data.GameObject;
 import model.data.Level;
-import model.data.Position;
-import model.data.Target;
+import model.data.gameObjects.Box;
+import model.data.gameObjects.Character;
+import model.data.gameObjects.GameObject;
+import model.data.gameObjects.Position;
+import model.data.gameObjects.Target;
+import model.data.gameObjects.Wall;
 
 public class MySokobanPolicy extends Policy {
 
@@ -23,10 +26,10 @@ public class MySokobanPolicy extends Policy {
 				Target t = (Target)lvl.getGameObjectByPosition(sourcePos);
 				t.setOnMe(null);
 			}
-			else // in case the player was not on target
+			else // in case the player wasn't on target
 				lvl.makeSlotNullByPosition(sourcePos);
 		
-			if(lvl.getGameObjectByPosition(player.getPos()).toStringXRay() == "o") // if the player went on target / off target
+			if(lvl.getGameObjectByPosition(player.getPos()) instanceof Target) // if the player went on target / off target
 				player.setOnTarget(true);
 			else
 				player.setOnTarget(false);
@@ -48,16 +51,16 @@ public class MySokobanPolicy extends Policy {
 		GameObject destObj = lvl.getGameObjectByPosition(destPos); // get the destination object (if null its empty slot)
 		
 		if(destObj != null)
-			if(destObj.toString() == "#") // case we have wall in front of us
+			if(destObj instanceof Wall) // case we have wall in front of us
 				return false;
 		
 		afterDestPos = PositionCalculator(destPos, dir); // calculate the after destination position
 		GameObject afterDestObj = lvl.getGameObjectByPosition(afterDestPos); // Initialize the after destination object
 			
 		if(destObj != null)
-			if(destObj.toString() == "@" || destObj.toString() == "$") // case we have one box in front of us
+			if(destObj instanceof Box || (destObj instanceof Target && ((Target)destObj).gotBoxOnMe())) // case we have one box in front of us 
 				if(afterDestObj != null)
-					if(afterDestObj.toString() == "$" || afterDestObj.toString() == "@" || afterDestObj.toString() == "#") // in case we have 2 boxes in front of us, or box and wall in front of us
+					if((afterDestObj instanceof Box || afterDestObj instanceof Wall || afterDestObj instanceof Target && ((Target)afterDestObj).gotBoxOnMe())) // in case we have 2 boxes in front of us, or box and wall in front of us
 						return false;	
 			
 		
@@ -68,7 +71,7 @@ public class MySokobanPolicy extends Policy {
 			lvl.moveObjectToPosition(player, destPos); // set the player new position and update the levelData array	
 			return true;
 			
-		}else if(destObj.toStringXRay() == "o") // case there is a target ahead 
+		}else if(destObj instanceof Target) // case there is a target ahead 
 		{
 			Target t = (Target)destObj;
 			if(t.gotGameObjectOnMe() == false) // the target is empty so the player go on it
@@ -86,7 +89,7 @@ public class MySokobanPolicy extends Policy {
 					lvl.movePlayerOnTarget(player, t);
 					return true;
 					
-				}else if(afterDestObj.toString() == "o") // if we are here the nextStepObj is an empty target
+				}else if(afterDestObj instanceof Target && !((Target) afterDestObj).gotBoxOnMe()) // if we are here the nextStepObj is an empty target // afterDestObj.toString() == "o"
 				{
 					Target t2 = (Target)afterDestObj;
 					GameObject go = t.getOnMe();
@@ -97,7 +100,7 @@ public class MySokobanPolicy extends Policy {
 					return true;
 				}
 			}
-		}else if(destObj.toString() == "@") // case there is a box ahead (the box is not on target)
+		}else if(destObj instanceof Box) // case there is a box ahead (the box is not on target)
 		{
 			if (afterDestObj == null) // after the box there is an empty slot
 			{
@@ -106,7 +109,7 @@ public class MySokobanPolicy extends Policy {
 				lvl.moveObjectToPosition(player, destPos);
 				return true;
 				
-			}else if(afterDestObj.toString() == "o") // if we are here the afterDestObj is an empty target
+			}else if(afterDestObj instanceof Target && !((Target) afterDestObj).gotBoxOnMe()) // if we are here the afterDestObj is an empty target
 			{
 				Target t2 = (Target)afterDestObj;
 				t2.setOnMe(destObj);

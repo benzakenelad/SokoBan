@@ -1,7 +1,9 @@
-package model.data;
+package model.levelLoaders;
 
 import java.io.FileInputStream;
 import java.util.HashMap;
+
+import model.data.Level;
 
 public class LoadLevel{
 	private HashMap<String, LevelLoader> hm = new HashMap<String, LevelLoader>();

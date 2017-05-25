@@ -3,6 +3,12 @@ package model.data;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import model.data.gameObjects.Box;
+import model.data.gameObjects.Character;
+import model.data.gameObjects.GameObject;
+import model.data.gameObjects.Position;
+import model.data.gameObjects.Target;
+
 public class Level implements Serializable{
 
 	/**
@@ -17,6 +23,7 @@ public class Level implements Serializable{
 	private String levelTitle = ""; // the level title
 	private Character player = null; // the level's character
 	private ArrayList<Target> targetsArray = new ArrayList<Target> (); // targets holder (faster level completion check)
+	private ArrayList<Box> boxesArray = new ArrayList<Box>(); // boxes holder
 	private int levelNumber = 0; // level number
 	private int levelMaxWidth = 0; // the level max Width
 	private int levelMaxHeight = 0; // the level height (number of lines)
@@ -131,6 +138,12 @@ public class Level implements Serializable{
 	public String getLevelName() {
 		return levelName;
 	}
+	public ArrayList<Box> getBoxesArray() {
+		return boxesArray;
+	}
+	public void setBoxesArray(ArrayList<Box> boxesArray) {
+		this.boxesArray = boxesArray;
+	}
 	public void setLevelName(String levelName) {
 		this.levelName = levelName;
 	}	
@@ -143,12 +156,12 @@ public class Level implements Serializable{
 	
 	// methods
 	
-	public GameObject getGameObjectByPosition(Position p) throws Exception // return an object by his position
+	public GameObject getGameObjectByPosition(Position position) throws Exception // return an object by his position
 	{
-		if(p != null){
-			int x = p.getX();
-			int y = p.getY();
-			return levelData[x][y];
+		if(position != null){
+			int row = position.getRow();
+			int col = position.getCol();
+			return levelData[row][col];
 		}	
 		return null;
 	}
@@ -159,21 +172,21 @@ public class Level implements Serializable{
 		if(dest == null)
 			throw new Exception("Null position.");
 		
-		int x = dest.getX();
-		int y = dest.getY();
+		int row = dest.getRow();
+		int col = dest.getCol();
 		
-		if(levelData[x][y] != null) // there is an object on this position
+		if(levelData[row][col] != null) // there is an object on this position
 			throw new Exception("Exception : Try to move an object on an excisting object.");
 		
 			
-		gameObj.setPos(new Position(x,y));
-		levelData[x][y] = gameObj;	
+		gameObj.setPos(new Position(row,col));
+		levelData[row][col] = gameObj;	
 	}
-	public void makeSlotNullByPosition(Position p) // make the Position arrayData slot null
+	public void makeSlotNullByPosition(Position position) // make the Position arrayData slot null
 	{
-		if(p != null){			
-			int x = p.getX(), y = p.getY();
-			levelData[x][y] = null;
+		if(position != null){			
+			int row = position.getRow(), col = position.getCol();
+			levelData[row][col] = null;
 		}
 	}
 	public void levelCompletionCheck() // check's if the level completed successfully
@@ -207,16 +220,16 @@ public class Level implements Serializable{
 		return levelDataTXT;
 	}
 
-	public void movePlayerOnTarget(Character player, Target t) throws Exception // move the player on the target
+	public void movePlayerOnTarget(Character player, Target target) throws Exception // move the player on the target
 	{
-		if(t.gotGameObjectOnMe() == false)
+		if(target.gotGameObjectOnMe() == false)
 		{  
-			t.setOnMe(player);
-		    player.setPos(new Position(t.getPos()));
+			target.setOnMe(player);
+		    player.setPos(new Position(target.getPos()));
 		}
 	}
 	
-	/*
+	
 	public char[][] getLevelByChar2DArray()
 	{
 		char[][] data = new char[this.levelMaxHeight][];
@@ -232,5 +245,7 @@ public class Level implements Serializable{
 
 		return data;
 	}
-	*/
+
+
+	
 }

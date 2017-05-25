@@ -1,52 +1,55 @@
-package model.data;
+package model.data.gameObjects;
 
 import java.io.Serializable;
 
-public class Target extends GameObject implements Serializable{
-	
+public class Target extends GameObject implements Serializable {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	
+
 	// data members
 	private GameObject onMe = null;
 	private boolean onMeflag = false;
 	private boolean boxOnMeFlag = false;
 
-	
 	// getters and setters
-	public GameObject getOnMe() {
-		return onMe;
-	}
-	
-	public void setOnMe(GameObject onMe) throws Exception // set a game object on the target
-	{ 
-		this.onMe = onMe;
+	public void setOnMe(GameObject onMe)// set a game object on the target
+	{
+		if(this.onMe != null)
+			if(this.onMe instanceof Box)
+				((Box)this.onMe).setOnTarget(false);
 		
-		if(onMe != null)
-		{
+		this.onMe = onMe;
+
+		if (onMe != null) {
 			setOnMeFlag(true);
-			if(onMe.toString() == "@")
-				setBoxOnMeFlag(true);
+			if (onMe instanceof Box){
+				((Box)onMe).setOnTarget(true);
+				boxOnMeFlag = true;
+			}
 			else
-				setBoxOnMeFlag(false);
-		}else
+				boxOnMeFlag = false;
+		} else // if onMe is null
 		{
 			setBoxOnMeFlag(false);
 			setOnMeFlag(false);
 		}
 	}
-	
+
+	public GameObject getOnMe() {
+		return onMe;
+	}
+
 	public boolean gotGameObjectOnMe() {
 		return onMeflag;
 	}
-	
+
 	private void setOnMeFlag(boolean onMeflag) {
 		this.onMeflag = onMeflag;
 	}
-	
+
 	public boolean gotBoxOnMe() {
 		return boxOnMeFlag;
 	}
@@ -54,24 +57,17 @@ public class Target extends GameObject implements Serializable{
 	private void setBoxOnMeFlag(boolean boxOnMeFlag) {
 		this.boxOnMeFlag = boxOnMeFlag;
 	}
-	
+
 	// methods
 	@Override
-	public String toString() 
-	{
-		if(this.onMeflag == true)
-		{
-			if(this.getOnMe().toString().compareTo("A") == 0)
+	public String toString() {
+		if (onMeflag == true) { // if there is an object on me
+			if (onMe instanceof Character)
 				return "B";
 			else
 				return "$";
-		}
-		else
+		} else
 			return "o";
 	}
-	@Override
-	public String toStringXRay() // see the actual object (if there is box on target toStringXRay will return "o")
-	{
-		return "o";
-	}
+
 }

@@ -1,7 +1,7 @@
 package model.policy;
 
 import model.data.Direction;
-import model.data.Position;
+import model.data.gameObjects.Position;
 
 public class MySokoBanCharPolicy {
 
@@ -16,18 +16,18 @@ public class MySokoBanCharPolicy {
 			for(int j = 0; j < levelData[i].length; j++)
 				if(levelData[i][j] == 'A' || levelData[i][j] == 'B')
 				{
-					source.setX(i);
-					source.setY(j);
+					source.setRow(i);
+					source.setCol(j);
 				}
 			
 		dest = PositionCalculator(source, direction);
 		afterDest = PositionCalculator(dest, direction);
 		
-		if(levelData[dest.getX()][dest.getY()] == '#')
+		if(levelData[dest.getRow()][dest.getCol()] == '#')
 			return false;
 		
-		if(levelData[dest.getX()][dest.getY()] == '@' || levelData[dest.getX()][dest.getY()] == '$')
-			if(levelData[afterDest.getX()][afterDest.getY()] == '@' || levelData[afterDest.getX()][afterDest.getY()] == '$' || levelData[afterDest.getX()][afterDest.getY()] == '#')
+		if(levelData[dest.getRow()][dest.getCol()] == '@' || levelData[dest.getRow()][dest.getCol()] == '$')
+			if(levelData[afterDest.getRow()][afterDest.getCol()] == '@' || levelData[afterDest.getRow()][afterDest.getCol()] == '$' || levelData[afterDest.getRow()][afterDest.getCol()] == '#')
 				return false;
 		
 		return true;
@@ -38,13 +38,13 @@ public class MySokoBanCharPolicy {
 	{
 		switch(dir){
 		case left:
-			return new Position(source.getX(), source.getY() - 1);
+			return new Position(source.getCol(), source.getCol() - 1);
 		case up:
-			return new Position(source.getX() - 1, source.getY());
+			return new Position(source.getCol() - 1, source.getCol());
 		case right:
-			return new Position(source.getX(), source.getY() + 1);
+			return new Position(source.getCol(), source.getCol() + 1);
 		case down:
-			return new Position(source.getX() + 1, source.getY());
+			return new Position(source.getCol() + 1, source.getCol());
 		default: throw new Exception("Invaild Direction");
 		
 		}

@@ -1,8 +1,10 @@
-package model.data;
+package model.levelLoaders;
 
 import java.beans.XMLDecoder;
 import java.io.BufferedInputStream;
 import java.io.InputStream;
+
+import model.data.Level;
 
 public class MyXMLLevelLoader implements LevelLoader {
 

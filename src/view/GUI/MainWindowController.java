@@ -242,5 +242,11 @@ public class MainWindowController extends Observable implements View, Initializa
 	public void setRecordsTableWindowController(RecordsTableWindowController recordsTableWindowController) {
 		this.recordsTableWindowController = recordsTableWindowController;
 	}
+	
+	public void solveLevel(){
+		setChanged();
+		notifyObservers("solve");
+	}
+	
 
 }

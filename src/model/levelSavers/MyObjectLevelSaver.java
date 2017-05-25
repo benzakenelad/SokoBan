@@ -1,7 +1,9 @@
-package model.data;
+package model.levelSavers;
 
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+
+import model.data.Level;
 
 public class MyObjectLevelSaver implements LevelSaver {
 

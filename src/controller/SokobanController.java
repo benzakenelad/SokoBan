@@ -15,6 +15,7 @@ import controller.sokobancommands.MoveCommand;
 import controller.sokobancommands.SafeExitCommand;
 import controller.sokobancommands.SaveLevelCommand;
 import controller.sokobancommands.SokobanCommand;
+import controller.sokobancommands.SolveCommand;
 import model.Model;
 import view.GUI.View;
 
@@ -58,9 +59,11 @@ public class SokobanController implements Observer {
 		
 		if(arg1 instanceof String){
 			String s = (String)arg1;
+			System.out.println(s);
 			s = s.toLowerCase();
 			String note[] = s.split(" ");
 			Command command = this.generateACommand(note);
+			
 			controller.insertCommand(command);
 		}		
 	}	
@@ -107,6 +110,7 @@ public class SokobanController implements Observer {
 		sokoCommandHashMap.put("save", new SaveLevelCommand());
 		sokoCommandHashMap.put("exit", new SafeExitCommand(this));
 		sokoCommandHashMap.put("display", new DisplayCommand());
+		sokoCommandHashMap.put("solve", new SolveCommand());
 	}	
 	
 }

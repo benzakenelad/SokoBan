@@ -16,13 +16,14 @@ import model.levelLoaders.LoadLevel;
 import model.levelSavers.SaveLevel;
 import model.policy.Policy;
 import searchLib.Action;
-import solver.solveSokobanLevel;
+import solver.SolveSokobanLevel;
 
 public class SokobanModel extends Observable implements Model {
 
 	// Data members
 	private Level lvl = null;
 	private ExecutorService executor = Executors.newCachedThreadPool();
+	private SolveSokobanLevel solver = new SolveSokobanLevel();
 
 	// Methods implementation
 	@Override
@@ -58,6 +59,12 @@ public class SokobanModel extends Observable implements Model {
 		}
 	}
 
+	@Override
+	public void close() {
+		executor.shutdown();
+		this.lvl = null;
+	}
+
 	// getters and setters
 	public Level getLvl() {
 		return lvl;
@@ -69,55 +76,65 @@ public class SokobanModel extends Observable implements Model {
 
 	@Override
 	public void solve() {
-		if(lvl == null)
+		if (lvl == null)
 			return;
-		try {
-			long begin = System.currentTimeMillis();
-			final List<Action> actions = MultiThreadedSolver(10,100);
-			long end = System.currentTimeMillis();
-			
-			double time = (end - begin) / 1000;
-			
-			System.out.println("Solving time : " + time + " seconds");
-			
-			if (actions == null){
-				System.out.println("Didnt solve the level.");
-				return;
-			}
-			new Thread(new Runnable() {
 
-				@Override
-				public void run() {
-					for (Action action : actions) {
-						setChanged();
-						notifyObservers(action.getName());
-						try {
-							Thread.sleep(100);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					long begin = System.currentTimeMillis();
+					final List<Action> actions = MultiThreadedSolver(1, 25);
+					long end = System.currentTimeMillis();
+					double time = (end - begin) / 1000;
+					System.out.println("Solving time : " + time + " seconds");
+
+					if (actions == null) {
+						System.out.println("Could not solve the level.");
+						return;
 					}
-
+					executeActions(actions);
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
-			}).start();
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		;
-
+			}
+		}).start();
 	}
 
-	private List<Action> MultiThreadedSolver(int threadsNum, int testSize) throws InterruptedException, ExecutionException, TimeoutException {
-		
-		ArrayList<Future<List<Action>>> futures = new ArrayList<Future<List<Action>>>();
+	@Override
+	public void quickSolve() {
+		if (lvl == null)
+			return;
+
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					long begin = System.currentTimeMillis();
+					List<Action> actions = solver.noneOptimalSolve(lvl);
+					long end = System.currentTimeMillis();
+					double time = (end - begin) / 1000;
+					System.out.println("Solving time : " + time + " seconds");
+					executeActions(actions);
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}).start();
+	}
+
+	private List<Action> MultiThreadedSolver(int threadsNum, int testSize)
+			throws InterruptedException, ExecutionException, TimeoutException {
+		if (lvl == null)
+			return null;
+		// Future product (futures)
+		ArrayList<Future<List<Action>>> futures = new ArrayList<Future<List<Action>>>(); 
 
 		for (int i = 0; i < threadsNum; i++) {
 			futures.add(executor.submit(new Callable<List<Action>>() {
 				@Override
 				public List<Action> call() throws Exception {
-					solveSokobanLevel solver = new solveSokobanLevel();
 					List<Action> actions = solver.optimalSolve(lvl, testSize);
 					return actions;
 				}
@@ -130,7 +147,8 @@ public class SokobanModel extends Observable implements Model {
 
 		List<Action> returnedList = null;
 
-		int largest = 99999999;
+		int largest = Integer.MAX_VALUE;
+
 		for (int i = 0; i < threadsNum; i++) {
 			if (lists.get(i) != null)
 				if (lists.get(i).size() < largest) {
@@ -138,7 +156,16 @@ public class SokobanModel extends Observable implements Model {
 					returnedList = lists.get(i);
 				}
 		}
-		
 		return returnedList;
+	}
+
+	private void executeActions(List<Action> actions) throws InterruptedException {
+		if (actions == null)
+			return;
+		for (Action action : actions) {
+			setChanged();
+			notifyObservers(action.getName());
+			Thread.sleep(150);
+		}
 	}
 }

@@ -11,4 +11,7 @@ public interface Model {
 	public void loadLevel(String note);
 	public void saveLevel(String note);
 	public void solve();
+	public void quickSolve();
+	public void close();
+
 }

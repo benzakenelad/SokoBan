@@ -66,31 +66,27 @@ public class MainWindowController extends Observable implements View, Initializa
 			public void handle(KeyEvent event) {
 				switch (event.getCode()) {
 				case UP:
-					if(levelCompleted == false)
-					{
-					setChanged();
-					notifyObservers("move up");
+					if (levelCompleted == false) {
+						setChanged();
+						notifyObservers("move up");
 					}
 					break;
 				case DOWN:
-					if(levelCompleted == false)
-					{
-					setChanged();
-					notifyObservers("move down");
+					if (levelCompleted == false) {
+						setChanged();
+						notifyObservers("move down");
 					}
 					break;
 				case LEFT:
-					if(levelCompleted == false)
-					{
-					setChanged();
-					notifyObservers("move left");
+					if (levelCompleted == false) {
+						setChanged();
+						notifyObservers("move left");
 					}
 					break;
 				case RIGHT:
-					if(levelCompleted == false)
-					{
-					setChanged();
-					notifyObservers("move right");
+					if (levelCompleted == false) {
+						setChanged();
+						notifyObservers("move right");
 					}
 					break;
 				case ESCAPE:
@@ -121,15 +117,17 @@ public class MainWindowController extends Observable implements View, Initializa
 	// Methods
 	@Override
 	public void Display(Level lvl) {
-		if(lvl == null || levelCompleted == true)
+		if (lvl == null || levelCompleted == true)
 			return;
 
-		this.setStepsText("Steps: " + Integer.toString(lvl.getSteps())); // update the steps string
-		
-		if (lvl.isLevelFinishedFlag() == true)
-		{
+		this.setStepsText("Steps: " + Integer.toString(lvl.getSteps())); // update
+																			// the
+																			// steps
+																			// string
+
+		if (lvl.isLevelFinishedFlag() == true) {
 			levelCompleted = true;
-			this.finishAct(lvl);	
+			this.finishAct(lvl);
 			return;
 		}
 
@@ -140,7 +138,11 @@ public class MainWindowController extends Observable implements View, Initializa
 			e.printStackTrace();
 		}
 
-		levelGraphicDisplay.setLevelData(lvl.getLevelByArrayListOfStrings()); // set the new level data
+		levelGraphicDisplay.setLevelData(lvl.getLevelByArrayListOfStrings()); // set
+																				// the
+																				// new
+																				// level
+																				// data
 	}
 
 	public void resetTimer() // reset the game timer
@@ -205,7 +207,7 @@ public class MainWindowController extends Observable implements View, Initializa
 
 			@Override
 			public void run() {
-				
+
 				Alert alert = new Alert(AlertType.CONFIRMATION);
 				alert.setTitle("Record List");
 				alert.setHeaderText(null);
@@ -242,11 +244,15 @@ public class MainWindowController extends Observable implements View, Initializa
 	public void setRecordsTableWindowController(RecordsTableWindowController recordsTableWindowController) {
 		this.recordsTableWindowController = recordsTableWindowController;
 	}
-	
-	public void solveLevel(){
+
+	public void solveLevel() {
 		setChanged();
 		notifyObservers("solve");
 	}
-	
+
+	public void quickLevelSolve() {
+		setChanged();
+		notifyObservers("quicksolve");
+	}
 
 }

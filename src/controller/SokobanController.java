@@ -12,6 +12,7 @@ import controller.sokobancommands.Command;
 import controller.sokobancommands.DisplayCommand;
 import controller.sokobancommands.LoadLevelCommand;
 import controller.sokobancommands.MoveCommand;
+import controller.sokobancommands.QuickSolveCommand;
 import controller.sokobancommands.SafeExitCommand;
 import controller.sokobancommands.SaveLevelCommand;
 import controller.sokobancommands.SokobanCommand;
@@ -97,6 +98,7 @@ public class SokobanController implements Observer {
 	{
 		view.safeExit();
 		controller.stop();
+		this.model.close();
 		if(server != null)
 			server.stopServer();
 	}
@@ -110,6 +112,7 @@ public class SokobanController implements Observer {
 		sokoCommandHashMap.put("exit", new SafeExitCommand(this));
 		sokoCommandHashMap.put("display", new DisplayCommand());
 		sokoCommandHashMap.put("solve", new SolveCommand());
+		sokoCommandHashMap.put("quicksolve", new QuickSolveCommand());
 	}	
 	
 }

@@ -22,6 +22,7 @@
                   <MenuItem mnemonicParsing="false" onAction="#saveFile" text="Save" />
                   <MenuItem mnemonicParsing="false" onAction="#close" text="Close" />
                   <MenuItem mnemonicParsing="false" onAction="#solveLevel" text="Solve" />
+                  <MenuItem mnemonicParsing="false" onAction="#quickLevelSolve" text="Quick Solve" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Records">
@@ -45,6 +46,6 @@
       </VBox>
    </left>
    <center> 
-          <LevelGraphicDisplay fx:id="levelGraphicDisplay" height="900.0" width="900.0" BorderPane.alignment="CENTER" wallFileName = "./resources/wall.jpg" boxFileName="./resources/box.jpg" playerFileName="./resources/player.jpg" floorFileName="./resources/floor.jpg" targetFileName="./resources/target.jpg" playerOnTargetFileName="./resources/playerontarget.jpg" boxOnTargetFileName="./resources/boxontarget.jpg" congratulationsFileName="./resources/congra.jpg" welcomeFileName="./resources/welcome.jpg"/>           
+          <LevelGraphicDisplay fx:id="levelGraphicDisplay" height="800.0" width="800.0" BorderPane.alignment="CENTER" wallFileName = "./resources/wall.jpg" boxFileName="./resources/box.jpg" playerFileName="./resources/player.jpg" floorFileName="./resources/floor.jpg" targetFileName="./resources/target.jpg" playerOnTargetFileName="./resources/playerontarget.jpg" boxOnTargetFileName="./resources/boxontarget.jpg" congratulationsFileName="./resources/congra.jpg" welcomeFileName="./resources/welcome.jpg"/>           
    </center>
 </BorderPane>

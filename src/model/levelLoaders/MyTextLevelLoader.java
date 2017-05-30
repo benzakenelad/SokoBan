@@ -52,12 +52,11 @@ public class MyTextLevelLoader implements LevelLoader {
 			lineData = new GameObject[length];
 			for(int j = 0; j < length; j++)
 			{
-				go = cgo.GenerateObject(levelDataTXT.get(i).charAt(j));			
+				go = cgo.GenerateObject(levelDataTXT.get(i).charAt(j), new Position(i,j));			
 
 				if(go == null)
 					continue;
 				
-				go.setPos(new Position(i,j));
 				if(go instanceof Character && flag) // flag make sure we have only one character(player)
 				{
 					lvl.setPlayer((Character)go);

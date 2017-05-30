@@ -13,6 +13,10 @@ public class Target extends GameObject implements Serializable {
 	private GameObject onMe = null;
 	private boolean onMeflag = false;
 	private boolean boxOnMeFlag = false;
+	
+	public Target(Position pos) {
+		super(pos);
+	}
 
 	// getters and setters
 	public void setOnMe(GameObject onMe)// set a game object on the target
@@ -68,6 +72,17 @@ public class Target extends GameObject implements Serializable {
 				return "$";
 		} else
 			return "o";
+	}
+
+	@Override
+	public GameObject clone() throws CloneNotSupportedException {
+		Target t = new Target(new Position(pos));
+		t.boxOnMeFlag = boxOnMeFlag;
+		t.onMeflag = onMeflag;
+		if(onMe != null)
+			t.onMe = onMe.clone();
+
+		return t;
 	}
 
 }

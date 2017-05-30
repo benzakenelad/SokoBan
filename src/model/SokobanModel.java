@@ -39,10 +39,10 @@ public class SokobanModel extends Observable implements Model {
 
 	@Override
 	public void loadLevel(String note) {
-		Level lvl = null;
+		Level tempLvl = null;
 		try {
-			lvl = new LoadLevel().Action(note);
-			this.lvl = lvl;
+			tempLvl = new LoadLevel().Action(note);
+			this.lvl = tempLvl;
 			this.setChanged();
 			this.notifyObservers("display");
 		} catch (Exception e) {
@@ -84,7 +84,7 @@ public class SokobanModel extends Observable implements Model {
 			public void run() {
 				try {
 					long begin = System.currentTimeMillis();
-					final List<Action> actions = MultiThreadedSolver(1, 25);
+					final List<Action> actions = MultiThreadedSolver(50, 50);
 					long end = System.currentTimeMillis();
 					double time = (end - begin) / 1000;
 					System.out.println("Solving time : " + time + " seconds");
@@ -129,7 +129,7 @@ public class SokobanModel extends Observable implements Model {
 		if (lvl == null)
 			return null;
 		// Future product (futures)
-		ArrayList<Future<List<Action>>> futures = new ArrayList<Future<List<Action>>>(); 
+		ArrayList<Future<List<Action>>> futures = new ArrayList<Future<List<Action>>>();
 
 		for (int i = 0; i < threadsNum; i++) {
 			futures.add(executor.submit(new Callable<List<Action>>() {

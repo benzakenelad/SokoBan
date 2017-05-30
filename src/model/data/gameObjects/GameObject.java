@@ -10,7 +10,7 @@ public abstract class GameObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	// data members
-	private Position pos = null;
+	protected Position pos = null;
 
 	// c'tors
 	public GameObject(Position pos) {
@@ -31,4 +31,7 @@ public abstract class GameObject implements Serializable {
 	@Override
 	public abstract String toString();
 
+	@Override
+	public abstract GameObject clone() throws CloneNotSupportedException;
+	
 }

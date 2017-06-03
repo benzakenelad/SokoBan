@@ -38,10 +38,12 @@ public class MainWindowController extends Observable implements View, Initializa
 
 	private RecordsTableWindowController recordsTableWindowController;
 	private Double counter = new Double(0); // time count
-	private StringProperty countString; // timer string
-	private Timer timerThread = null; // timer
+	private StringProperty countString; // timer string	
+	private boolean countFlag = true; // responsible for timer stoping
+	private boolean timerFlag = false; // timer is on
+	private Timer timerThread = new Timer();; // timer	
 	private MediaPlayer mediaPlayer = null; // media player
-	private boolean levelCompleted = false;;
+	private boolean levelCompleted = false; // levelCompleted flag
 
 	// initialization
 	@Override
@@ -57,6 +59,7 @@ public class MainWindowController extends Observable implements View, Initializa
 		countString = new SimpleStringProperty("Timer : 0");
 		timer.textProperty().bind(countString);
 		timer.setVisible(true);
+		
 
 		// key function initialization
 		levelGraphicDisplay.addEventFilter(MouseEvent.MOUSE_CLICKED, (e) -> levelGraphicDisplay.requestFocus());
@@ -67,24 +70,28 @@ public class MainWindowController extends Observable implements View, Initializa
 				switch (event.getCode()) {
 				case UP:
 					if (levelCompleted == false) {
+						levelGraphicDisplay.setCurrentPlayerPosition("up");
 						setChanged();
 						notifyObservers("move up");
 					}
 					break;
 				case DOWN:
 					if (levelCompleted == false) {
+						levelGraphicDisplay.setCurrentPlayerPosition("down");
 						setChanged();
 						notifyObservers("move down");
 					}
 					break;
 				case LEFT:
 					if (levelCompleted == false) {
+						levelGraphicDisplay.setCurrentPlayerPosition("left");
 						setChanged();
 						notifyObservers("move left");
 					}
 					break;
 				case RIGHT:
 					if (levelCompleted == false) {
+						levelGraphicDisplay.setCurrentPlayerPosition("right");
 						setChanged();
 						notifyObservers("move right");
 					}
@@ -103,6 +110,7 @@ public class MainWindowController extends Observable implements View, Initializa
 				levelGraphicDisplay.requestFocus();
 			}
 		});
+		
 	}
 
 	// Record Table Window display/hide
@@ -119,49 +127,49 @@ public class MainWindowController extends Observable implements View, Initializa
 	public void Display(Level lvl) {
 		if (lvl == null || levelCompleted == true)
 			return;
-
-		this.setStepsText("Steps: " + Integer.toString(lvl.getSteps())); // update
-																			// the
-																			// steps
-																			// string
-
+		
+		setStepsText("Steps: " + Integer.toString(lvl.getSteps())); // update the steps string	
+		
 		if (lvl.isLevelFinishedFlag() == true) {
+			lvl.setFinishTime(counter.doubleValue());
+			countFlag = false;
 			levelCompleted = true;
-			this.finishAct(lvl);
-			return;
 		}
-
-		try {
-			levelGraphicDisplay.setMaxHeight(lvl.getLevelMaxHeight());
-			levelGraphicDisplay.setMaxWidth(lvl.getLevelMaxWidth());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		levelGraphicDisplay.setLevelData(lvl.getLevelByArrayListOfStrings()); // set
-																				// the
-																				// new
-																				// level
-																				// data
-	}
-
-	public void resetTimer() // reset the game timer
-	{
-		counter = 0.0;
-		timerThread = new Timer();
-		timerThread.scheduleAtFixedRate(new TimerTask() {
-
+			
+		Platform.runLater(new Runnable() {			
 			@Override
 			public void run() {
-				counter += 0.1;
-
-				counter = BigDecimal.valueOf(counter).setScale(3, RoundingMode.HALF_UP).doubleValue();
-
-				countString.set("Timer: " + counter);
+					levelGraphicDisplay.redraw(lvl);							
 			}
-		}, 0, 100);
-
+		});
+		
+		if(levelCompleted){
+			try {Thread.sleep(1000);} catch (Exception e) {}
+			finishAct(lvl);
+		}
+		
 	}
+
+	public void resetTimer(){ // reset the game timer	
+		if(timerFlag){
+			counter = 0.0; // reset timer
+			countFlag = true; // return the counting
+		}
+		else{	
+			timerThread.scheduleAtFixedRate(new TimerTask() {
+
+				@Override
+				public void run() {
+					counter += 0.1;
+
+					counter = BigDecimal.valueOf(counter).setScale(3, RoundingMode.HALF_UP).doubleValue();
+					if(countFlag)
+						countString.set("Timer: " + counter);
+				}
+			}, 0, 100);
+			timerFlag = true;
+		}
+	}	
 
 	private void startMusic() // start the background music
 	{
@@ -171,6 +179,7 @@ public class MainWindowController extends Observable implements View, Initializa
 		mediaPlayer = new MediaPlayer(sound);
 		mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
 		mediaPlayer.play();
+
 	}
 
 	public void saveFile() {
@@ -192,15 +201,13 @@ public class MainWindowController extends Observable implements View, Initializa
 		if (chosen != null) {
 			System.out.println(chosen.getPath()); // print the path
 			resetTimer();
+			levelCompleted = false;
 			setChanged();
 			notifyObservers("load Levels/" + chosen.getName());
-		}
-		levelCompleted = false;
+		}	
 	}
 
 	public void finishAct(Level lvl) {
-		lvl.setFinishTime(counter.doubleValue());
-		timerThread.cancel();
 		levelGraphicDisplay.finishDraw();
 
 		Platform.runLater(new Runnable() {
@@ -238,7 +245,15 @@ public class MainWindowController extends Observable implements View, Initializa
 	}
 
 	private void setStepsText(String text) {
-		steps.setText(text);
+		Platform.runLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				steps.setText(text);
+				
+			}
+		});
+		
 	}
 
 	public void setRecordsTableWindowController(RecordsTableWindowController recordsTableWindowController) {

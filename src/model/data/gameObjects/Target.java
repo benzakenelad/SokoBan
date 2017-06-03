@@ -13,7 +13,7 @@ public class Target extends GameObject implements Serializable {
 	private GameObject onMe = null;
 	private boolean onMeflag = false;
 	private boolean boxOnMeFlag = false;
-	
+
 	public Target(Position pos) {
 		super(pos);
 	}
@@ -21,21 +21,20 @@ public class Target extends GameObject implements Serializable {
 	// getters and setters
 	public void setOnMe(GameObject onMe)// set a game object on the target
 	{
-		if(this.onMe != null)
-			if(this.onMe instanceof Box)
-				((Box)this.onMe).setOnTarget(false);
-		
+
 		this.onMe = onMe;
 
-		if (onMe != null) {
+		if (this.onMe != null) {
 			setOnMeFlag(true);
-			if (onMe instanceof Box){
-				((Box)onMe).setOnTarget(true);
+
+			if (this.onMe instanceof Box) {
+				((Box) onMe).setOnTarget(true);
 				boxOnMeFlag = true;
-			}
-			else
+			}else
 				boxOnMeFlag = false;
-		} else // if onMe is null
+			
+
+		} else // if new onMe is null
 		{
 			setBoxOnMeFlag(false);
 			setOnMeFlag(false);
@@ -79,7 +78,7 @@ public class Target extends GameObject implements Serializable {
 		Target t = new Target(new Position(pos));
 		t.boxOnMeFlag = boxOnMeFlag;
 		t.onMeflag = onMeflag;
-		if(onMe != null)
+		if (onMe != null)
 			t.onMe = onMe.clone();
 
 		return t;

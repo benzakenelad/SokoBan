@@ -86,14 +86,15 @@ public class MySokobanPolicy extends Policy {
 					GameObject go = t.getOnMe();
 					lvl.moveObjectToPosition(go, afterDestPos);
 					t.setOnMe(null);
+					((Box)go).setOnTarget(false);
 					lvl.movePlayerOnTarget(player, t);
 					return true;
 					
-				}else if(afterDestObj instanceof Target && !((Target) afterDestObj).gotBoxOnMe()) // if we are here the nextStepObj is an empty target // afterDestObj.toString() == "o"
+				}else if(afterDestObj instanceof Target && !((Target) afterDestObj).gotBoxOnMe()) // if we are here the nextStepObj is an empty target 
 				{
 					Target t2 = (Target)afterDestObj;
 					GameObject go = t.getOnMe();
-					go.setPos(new Position(t2.getPos()));
+					go.setPos(t2.getPos());
 					t2.setOnMe(go);
 					t.setOnMe(null);
 					lvl.movePlayerOnTarget(player, t);
@@ -106,6 +107,7 @@ public class MySokobanPolicy extends Policy {
 			{
 				lvl.moveObjectToPosition(destObj, afterDestPos);
 				lvl.makeSlotNullByPosition(destPos);
+				((Box)destObj).setOnTarget(false);
 				lvl.moveObjectToPosition(player, destPos);
 				return true;
 				
@@ -113,7 +115,7 @@ public class MySokobanPolicy extends Policy {
 			{
 				Target t2 = (Target)afterDestObj;
 				t2.setOnMe(destObj);
-				destObj.setPos(new Position(t2.getPos()));
+				destObj.setPos(t2.getPos());
 				lvl.makeSlotNullByPosition(destPos);
 				lvl.moveObjectToPosition(player, destPos);
 				return true;

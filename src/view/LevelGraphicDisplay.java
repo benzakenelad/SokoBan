@@ -2,112 +2,97 @@ package view;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import model.data.Level;
 
 public class LevelGraphicDisplay extends Canvas
 {
-	// Data Members
-	private ArrayList<String> levelData = null;
-	double maxWidth = 0;
-	double maxHeight = 0;
-	
+	// Images
+	private Image wall = null;
+	private Image currentPlayerPosition = null;
+	private Image upPositionPlayer = null;
+	private Image downPositionPlayer = null;
+	private Image rightPositionPlayer = null;
+	private Image leftPositionPlayer = null;
+	private Image floor = null;
+	private Image box = null;
+	private Image target = null;
+	private Image boxontarget = null;
+	private Image congratulations = null;
+	private Image welcome = null;
+	private boolean initializedFlag = false;
+
 	// Properties
-	private StringProperty playerFileName;
+	private StringProperty upPlayerFileName;
+	private StringProperty downPlayerFileName;
+	private StringProperty rightPlayerFileName;
+	private StringProperty leftPlayerFileName;
 	private StringProperty wallFileName;
     private StringProperty floorFileName;
     private StringProperty boxFileName;
 	private StringProperty targetFileName;
 	private StringProperty boxOnTargetFileName;
-	private StringProperty playerOnTargetFileName;
 	private StringProperty congratulationsFileName;
 	private StringProperty welcomeFileName;
 
 	// C'TOR
 	public LevelGraphicDisplay() {
-		playerFileName = new SimpleStringProperty();
+		upPlayerFileName = new SimpleStringProperty();
+		downPlayerFileName = new SimpleStringProperty();
+		rightPlayerFileName = new SimpleStringProperty();
+		leftPlayerFileName = new SimpleStringProperty();
+		upPlayerFileName = new SimpleStringProperty();
+		downPlayerFileName = new SimpleStringProperty();
+		rightPlayerFileName = new SimpleStringProperty();
+		leftPlayerFileName = new SimpleStringProperty();
 		wallFileName = new SimpleStringProperty();
 		floorFileName = new SimpleStringProperty();
 		boxFileName = new SimpleStringProperty();
 		targetFileName = new SimpleStringProperty();
 		boxFileName = new SimpleStringProperty();
 		boxOnTargetFileName = new SimpleStringProperty();
-		playerOnTargetFileName = new SimpleStringProperty();
 		congratulationsFileName = new SimpleStringProperty();
-		welcomeFileName = new SimpleStringProperty();
+		welcomeFileName = new SimpleStringProperty();	
 	}
 	
 	public void finishDraw()
-	{
-		Image congra = null;
-		try {
-			congra = new Image(new FileInputStream(congratulationsFileName.get()));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+	{		
 		GraphicsContext gc = getGraphicsContext2D();
-		if(congra != null)
-			gc.drawImage(congra, 0, 0, getWidth(), getHeight());
+		if(congratulations != null)
+			gc.drawImage(congratulations, 0, 0, getWidth(), getHeight());
 	}
 	
 	public void welcomeDraw()
 	{
-		Image welcome = null;
-		try {
-			welcome = new Image(new FileInputStream(welcomeFileName.get()));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(!initializedFlag){
+			initalizeImages();
+			initializedFlag = true;
 		}
 		GraphicsContext gc = getGraphicsContext2D();
 		if(welcome != null)
 			gc.drawImage(welcome, 0, 0, getWidth(), getHeight());
 	}
 	
-	public void redraw()
+	public void redraw(Level lvl)
 	{
-		if(levelData == null)
+		if(lvl == null)
 			return;
 		
-		double levelWidth = getWidth();
-		double levelHeight = getHeight();
-		double itemWidth = levelWidth / this.maxWidth;
-		double itemHeight = levelHeight / this.maxHeight;
+		char[][] levelData = lvl.getLevelByChar2DArray();
+		double itemWidth = getWidth() / lvl.getLevelMaxWidth();
+		double itemHeight = getHeight() / lvl.getLevelMaxHeight();
 		
 		GraphicsContext gc = getGraphicsContext2D();
-		
-		
-		Image wall = null;
-		Image player = null;
-		Image floor = null;
-		Image box = null;
-		Image target = null;
-		Image playerontarget = null;
-		Image boxontarget = null;
-		try {
-			wall = new Image(new FileInputStream(wallFileName.get()));
-			player = new Image(new FileInputStream(playerFileName.get()));
-			floor = new Image(new FileInputStream(floorFileName.get()));
-			box = new Image(new FileInputStream(boxFileName.get()));
-			target = new Image(new FileInputStream(targetFileName.get()));
-			playerontarget = new Image(new FileInputStream(playerOnTargetFileName.get()));
-			boxontarget = new Image(new FileInputStream(boxOnTargetFileName.get()));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		for(int i = 0; i < levelData.size(); i++)
-			for(int j = 0; j < levelData.get(i).length(); j++)
+			
+		for(int i = 0; i < levelData.length; i++)
+			for(int j = 0; j < levelData[i].length; j++)
 			{
-				switch (levelData.get(i).charAt(j)) {
+				switch (levelData[i][j]) {
 				case '#':
 					gc.drawImage(wall, j * itemWidth , i * itemHeight , itemWidth, itemHeight);
 					break;
@@ -118,13 +103,15 @@ public class LevelGraphicDisplay extends Canvas
 					gc.drawImage(box, j * itemWidth , i * itemHeight , itemWidth, itemHeight);
 					break;
 				case 'A':
-					gc.drawImage(player, j * itemWidth , i * itemHeight , itemWidth, itemHeight);
+					gc.drawImage(floor, j * itemWidth , i * itemHeight , itemWidth, itemHeight);
+					gc.drawImage(getCurrentPositionPlayer(), j * itemWidth , i * itemHeight , itemWidth, itemHeight);
 					break;
 				case 'o':
 					gc.drawImage(target, j * itemWidth , i * itemHeight , itemWidth, itemHeight);
 					break;
 				case 'B':
-					gc.drawImage(playerontarget, j * itemWidth , i * itemHeight , itemWidth, itemHeight);
+					gc.drawImage(floor, j * itemWidth , i * itemHeight , itemWidth, itemHeight);
+					gc.drawImage(getCurrentPositionPlayer(), j * itemWidth , i * itemHeight , itemWidth, itemHeight);
 					break;
 				case '$':
 					gc.drawImage(boxontarget, j * itemWidth , i * itemHeight , itemWidth, itemHeight);
@@ -136,41 +123,53 @@ public class LevelGraphicDisplay extends Canvas
 			}	
 	}
 	
+	private void initalizeImages(){
+		try {
+			welcome = new Image(new FileInputStream(welcomeFileName.get()));	
+			upPositionPlayer = new Image(new FileInputStream(upPlayerFileName.get()));
+			downPositionPlayer = new Image(new FileInputStream(downPlayerFileName.get()));
+			rightPositionPlayer = new Image(new FileInputStream(rightPlayerFileName.get()));
+			leftPositionPlayer = new Image(new FileInputStream(leftPlayerFileName.get()));
+			wall = new Image(new FileInputStream(wallFileName.get()));
+			floor = new Image(new FileInputStream(floorFileName.get()));
+			box = new Image(new FileInputStream(boxFileName.get()));
+			target = new Image(new FileInputStream(targetFileName.get()));
+			boxontarget = new Image(new FileInputStream(boxOnTargetFileName.get()));
+			congratulations = new Image(new FileInputStream(congratulationsFileName.get()));
+			currentPlayerPosition = downPositionPlayer;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void clear()
 	{
 		this.getGraphicsContext2D().clearRect(0, 0, getWidth(), getHeight());
 	}
 	
-	// Getters and Setters
-	public void setLevelData(ArrayList<String> levelData)
-	{
-		this.levelData = levelData;
-		redraw();
+	public Image getCurrentPositionPlayer(){
+		return currentPlayerPosition;
 	}
 	
-	public void setMaxWidth(int maxWidth) throws Exception {
-		if(maxWidth > 0)
-			this.maxWidth = (double)maxWidth;
-		else
-			throw new Exception("None positive width exception");
+	public  void setCurrentPlayerPosition(String direction){
+		switch (direction) {
+		case "up":
+			currentPlayerPosition = upPositionPlayer;
+			break;
+		case "down":
+			currentPlayerPosition = downPositionPlayer;
+			break;
+		case "left":
+			currentPlayerPosition = leftPositionPlayer;
+			break;
+		case "right":
+			currentPlayerPosition = rightPositionPlayer;
+			break;
+		default:
+			break;
+		}
 	}
-
-	public void setMaxHeight(int maxHeight) throws Exception {
-		if(maxHeight > 0)
-			this.maxHeight = (double)maxHeight;
-		else
-			throw new Exception("None positive height exception.");
-	}
-	
-
-	public String getPlayerFileName() {
-		return playerFileName.get();
-	}
-
-	public void setPlayerFileName(String playerFileName) {
-		this.playerFileName.set(playerFileName);
-	}
-
+		
 	public String getWallFileName() {
 		return wallFileName.get();
 	}
@@ -211,14 +210,6 @@ public class LevelGraphicDisplay extends Canvas
 		this.boxOnTargetFileName.set(boxOnTargetFileName);
 	}
 
-	public String getPlayerOnTargetFileName() {
-		return playerOnTargetFileName.get();
-	}
-
-	public void setPlayerOnTargetFileName(String playerOnTargetFileName) {
-		this.playerOnTargetFileName.set(playerOnTargetFileName);
-	}
-
 	public String getCongratulationsFileName() {
 		return congratulationsFileName.get();
 	}
@@ -234,6 +225,39 @@ public class LevelGraphicDisplay extends Canvas
 	public void setWelcomeFileName(String welcomeFileName) {
 		this.welcomeFileName.set(welcomeFileName);
 	}
+	
+	public String getUpPlayerFileName() {
+		return upPlayerFileName.get();
+	}
+
+	public void setUpPlayerFileName(String upPlayerFileName) {
+		this.upPlayerFileName.set(upPlayerFileName);
+	}
+	
+	public String getDownPlayerFileName() {
+		return downPlayerFileName.get();
+	}
+
+	public void setDownPlayerFileName(String downPlayerFileName) {
+		this.downPlayerFileName.set(downPlayerFileName);
+	}
+	
+	public String getRightPlayerFileName() {
+		return rightPlayerFileName.get();
+	}
+
+	public void setRightPlayerFileName(String rightPlayerFileName) {
+		this.rightPlayerFileName.set(rightPlayerFileName);
+	}
+	
+	public String getLeftPlayerFileName() {
+		return upPlayerFileName.get();
+	}
+
+	public void setLeftPlayerFileName(String leftPlayerFileName) {
+		this.leftPlayerFileName.set(leftPlayerFileName);
+	}
+	
 
 
 }

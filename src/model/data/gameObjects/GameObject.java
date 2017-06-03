@@ -16,15 +16,18 @@ public abstract class GameObject implements Serializable {
 	public GameObject(Position pos) {
 		this.pos = new Position(pos);
 	}
+
 	public GameObject() {
 	}
-	
+
 	// getters and setters
 	public Position getPos() {
 		return pos;
 	}
+
 	public void setPos(Position pos) {
-		this.pos = pos;
+		if (pos != null)
+			this.pos = new Position(pos);
 	}
 
 	// methods
@@ -33,5 +36,5 @@ public abstract class GameObject implements Serializable {
 
 	@Override
 	public abstract GameObject clone() throws CloneNotSupportedException;
-	
+
 }

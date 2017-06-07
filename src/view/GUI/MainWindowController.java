@@ -63,53 +63,62 @@ public class MainWindowController extends Observable implements View, Initializa
 
 		// key function initialization
 		levelGraphicDisplay.addEventFilter(MouseEvent.MOUSE_CLICKED, (e) -> levelGraphicDisplay.requestFocus());
-		levelGraphicDisplay.setOnKeyPressed(new EventHandler<KeyEvent>() {
-
+		Platform.runLater(new Runnable() {
+			
 			@Override
-			public void handle(KeyEvent event) {
-				switch (event.getCode()) {
-				case UP:
-					if (levelCompleted == false) {
-						levelGraphicDisplay.setCurrentPlayerPosition("up");
-						setChanged();
-						notifyObservers("move up");
+			public void run() {
+				levelGraphicDisplay.setOnKeyPressed(new EventHandler<KeyEvent>() {
+
+					@Override
+					public void handle(KeyEvent event) {
+						switch (event.getCode()) {
+						case UP:
+							if (levelCompleted == false) {
+								levelGraphicDisplay.setCurrentPlayerPosition("up");
+								setChanged();
+								notifyObservers("move up");
+							}
+							break;
+						case DOWN:
+							if (levelCompleted == false) {
+								levelGraphicDisplay.setCurrentPlayerPosition("down");
+								setChanged();
+								notifyObservers("move down");
+							}
+							break;
+						case LEFT:
+							if (levelCompleted == false) {
+								levelGraphicDisplay.setCurrentPlayerPosition("left");
+								setChanged();
+								notifyObservers("move left");
+							}
+							break;
+						case RIGHT:
+							if (levelCompleted == false) {
+								levelGraphicDisplay.setCurrentPlayerPosition("right");
+								setChanged();
+								notifyObservers("move right");
+							}
+							break;
+						case ESCAPE:
+							close();
+							break;
+						case O:
+							openFile();
+							break;
+						case S:
+							saveFile();
+						default:
+							break;
+						}
+						
+						levelGraphicDisplay.requestFocus();
 					}
-					break;
-				case DOWN:
-					if (levelCompleted == false) {
-						levelGraphicDisplay.setCurrentPlayerPosition("down");
-						setChanged();
-						notifyObservers("move down");
-					}
-					break;
-				case LEFT:
-					if (levelCompleted == false) {
-						levelGraphicDisplay.setCurrentPlayerPosition("left");
-						setChanged();
-						notifyObservers("move left");
-					}
-					break;
-				case RIGHT:
-					if (levelCompleted == false) {
-						levelGraphicDisplay.setCurrentPlayerPosition("right");
-						setChanged();
-						notifyObservers("move right");
-					}
-					break;
-				case ESCAPE:
-					close();
-					break;
-				case O:
-					openFile();
-					break;
-				case S:
-					saveFile();
-				default:
-					break;
-				}
-				levelGraphicDisplay.requestFocus();
+				});
+			
 			}
 		});
+		
 		
 	}
 
